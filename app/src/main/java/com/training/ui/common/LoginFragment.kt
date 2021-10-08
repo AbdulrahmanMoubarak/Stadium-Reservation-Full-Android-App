@@ -18,6 +18,7 @@ import com.training.ui.admin.AdminActivity
 import com.training.ui.customer.CustomerActivity
 import com.training.ui.owner.OwnerActivity
 import com.training.util.ErrorFinder
+import com.training.util.ItemHasherSHA256
 import com.training.util.states.SignInState
 import com.training.util.states.SignInViewModelEventState
 import com.training.viewmodels.SignInViewModel
@@ -46,7 +47,7 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             val email = editTextEmail.text.toString()
-            val password = editTextPassword.text.toString()
+            val password = ItemHasherSHA256.hashItem(editTextPassword.text.toString())
             viewModel.scope.launch{
                 viewModel.setStateEvent(
                     SignInViewModelEventState.ProceedLogin,

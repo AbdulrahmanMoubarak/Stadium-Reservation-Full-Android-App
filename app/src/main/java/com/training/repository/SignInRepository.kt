@@ -14,14 +14,12 @@ class SignInRepository {
     // returns int > 1 if entry data is valid
     suspend fun validateLoginData(user: LoginModel): Flow<SignInState<UserModel>> = flow {
         emit(SignInState.Loading)
-        if (!user.email.contains('@')) {
-            emit(SignInState.Error(SignInDataError.ERROR_EMAIL_NOT_VALID))
-        } else if (!(user.email.length > 0)) {
+        if (!(user.email.length > 0)) {
             emit(SignInState.Error(SignInDataError.ERROR_EMPTY_EMAIL))
-
+        } else if (!user.email.contains('@')) {
+            emit(SignInState.Error(SignInDataError.ERROR_EMAIL_NOT_VALID))
         } else if (!(user.password.length > 0)) {
             emit(SignInState.Error(SignInDataError.ERROR_EMPTY_PASSWORD))
-
         } else {
             emit(validateLogin_Database(user.email, user.password))
         }

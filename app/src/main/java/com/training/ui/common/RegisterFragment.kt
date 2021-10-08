@@ -11,6 +11,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.training.R
 import com.training.model.UserModel
 import com.training.util.ErrorFinder
+import com.training.util.ItemEncryptorASE
+import com.training.util.ItemHasherSHA256
 import com.training.util.states.SignInState
 import com.training.util.states.SignInViewModelEventState
 import com.training.viewmodels.SignInViewModel
@@ -41,8 +43,8 @@ class RegisterFragment : Fragment() {
 
         registerButton.setOnClickListener {
             val email = reg_email.text.toString()
-            val password = reg_pass.text.toString()
-            val phone = reg_phone.text.toString()
+            val password = ItemHasherSHA256.hashItem(reg_pass.text.toString())
+            val phone = String(ItemEncryptorASE().encrypt(requireContext() ,reg_phone.text.toString()))
             val fname = reg_fname.text.toString()
             val lname = reg_lname.text.toString()
 

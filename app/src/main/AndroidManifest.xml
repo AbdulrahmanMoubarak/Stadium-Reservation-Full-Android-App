@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StadiumReserver">
         <activity
+            android:name="com.training.fakeactivities.FakeLoginActivity"
+            android:exported="true"
+            android:label="@string/title_activity_fake_login"
+            android:theme="@style/Theme.StadiumReserver.NoActionBar" />
+        <activity
             android:name=".ui.owner.OwnerActivity"
             android:exported="true" />
         <activity

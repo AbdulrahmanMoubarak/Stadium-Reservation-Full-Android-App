@@ -14,4 +14,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.StadiumReserver.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.StadiumReserver.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.StadiumReserver.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

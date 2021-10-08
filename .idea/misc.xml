@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_admin.xml" value="0.275" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_customer.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_fake_login2.xml" value="0.1296875" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_owner.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/content_fake_login.xml" value="0.176" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_login.xml" value="0.14375" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_register.xml" value="0.39260312944523473" />
         <entry key="..\:/Users/oddal/AndroidStudioProjects/StadiumReserver/app/src/main/res/drawable-v24/login_button_bk.xml" value="0.15989583333333332" />

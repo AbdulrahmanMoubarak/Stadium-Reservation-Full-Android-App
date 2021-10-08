@@ -7,12 +7,13 @@
     tools:context=".ui.common.LoginFragment">
 
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
 
         style="@style/linearParent"
         android:layout_gravity="center"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="116dp"
         android:padding="@dimen/loginViewsMargin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +21,7 @@
         app:layout_constraintVertical_bias="0.186">
 
         <TextView
+            android:id="@+id/login_header_txt"
             style="@style/headerTextPrimary"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:text="@string/login" />
@@ -84,7 +86,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/login_imageView"
         android:layout_width="231dp"
         android:layout_height="183dp"
         android:layout_marginTop="32dp"
