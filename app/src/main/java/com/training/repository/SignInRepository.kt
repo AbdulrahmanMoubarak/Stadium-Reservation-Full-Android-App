@@ -19,7 +19,7 @@ constructor(
     var firebaseManager: FirebaseManager,
 
 ){
-    private var state: SignInState<UserModel>? = null
+    private lateinit var state: SignInState<UserModel>
     // returns int > 1 if entry data is valid
     fun validateLoginData(user: LoginModel): Flow<SignInState<UserModel>> = flow {
         emit(SignInState.Loading)
@@ -27,22 +27,16 @@ constructor(
         if (error <= -1)
             emit(SignInState.Error(error))
         else {
-            validateLoginData(user)
-
-            state?.let { s->
-                emit(s)
-            }
+            emit(validateLogin_Database(user))
         }
     }
 
     // returns user with privilege if entry data is valid
     private suspend fun validateLogin_Database(
         user: LoginModel
-    ){
+    ): SignInState<UserModel>{
         checkInitialSeeding()
-        firebaseManager.validateUser(user).onEach {
-            state = it
-        }.launchIn(CoroutineScope(Dispatchers.IO))
+        return firebaseManager.validateUser(user)
     }
 
     // returns int > 1 if entry data is valid
