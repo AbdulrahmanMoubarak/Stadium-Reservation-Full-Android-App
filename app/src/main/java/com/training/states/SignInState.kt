@@ -1,4 +1,4 @@
-package com.training.util.states
+package com.training.states
 
 sealed class SignInState <out R>{
     data class Success<out T>(val data:T):SignInState<T>()

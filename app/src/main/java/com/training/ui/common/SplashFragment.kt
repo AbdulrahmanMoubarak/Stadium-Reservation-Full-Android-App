@@ -11,19 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.training.R
+import com.training.factory.UserActivityFactory
+import com.training.firebase.FirebaseInitialScriptRunner
 import com.training.model.UserModel
 import com.training.ui.admin.AdminActivity
 import com.training.ui.customer.CustomerActivity
 import com.training.ui.owner.OwnerActivity
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 
 class SplashFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_splash, container, false)
-
         Handler(Looper.getMainLooper())
             .postDelayed({
                 if(!isLogged()) {
@@ -36,6 +40,10 @@ class SplashFragment : Fragment() {
             }, 2000)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun isLogged(): Boolean{
@@ -59,21 +67,12 @@ class SplashFragment : Fragment() {
     }
 
     private fun navigateToUserActivity(user: UserModel){
-        var intent: Intent
-        if("Admin".equals(user.getAccessPrivilege())){
-            intent = Intent(requireActivity(), AdminActivity::class.java)
-        }
-        else if("Owner".equals(user.getAccessPrivilege())){
-            intent = Intent(requireActivity(), OwnerActivity::class.java)
-        }
-        else{
-            intent = Intent(requireActivity(), CustomerActivity::class.java)
-        }
-
-        intent.apply {
+        val intent = Intent(
+            requireActivity(),
+            UserActivityFactory().getActivityClass(user.getAccessPrivilege())
+        ).apply {
             putExtra("user", user)
         }
-
         startActivity(intent)
     }
 }

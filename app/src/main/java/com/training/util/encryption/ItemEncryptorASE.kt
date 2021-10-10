@@ -1,4 +1,4 @@
-package com.training.util
+package com.training.util.encryption
 
 import android.content.Context
 import androidx.preference.PreferenceManager

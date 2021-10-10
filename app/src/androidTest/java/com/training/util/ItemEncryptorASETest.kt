@@ -1,11 +1,9 @@
 package com.training.util
 
 import android.content.Context
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
+import com.training.util.encryption.ItemEncryptorASE
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

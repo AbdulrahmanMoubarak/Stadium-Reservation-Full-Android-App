@@ -1,4 +1,4 @@
-package com.training.util
+package com.training.util.encryption
 
 import java.security.MessageDigest
 

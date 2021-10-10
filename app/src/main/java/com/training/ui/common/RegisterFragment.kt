@@ -10,11 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
 import com.training.model.UserModel
-import com.training.util.ErrorFinder
-import com.training.util.ItemEncryptorASE
-import com.training.util.ItemHasherSHA256
-import com.training.util.states.SignInState
-import com.training.util.states.SignInViewModelEventState
+import com.training.util.validation.ErrorFinder
+import com.training.util.encryption.ItemEncryptorASE
+import com.training.util.encryption.ItemHasherSHA256
+import com.training.states.SignInState
+import com.training.states.SignInViewModelEventState
 import com.training.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -83,7 +83,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun showErrorMsg(error: Int){
-        val error_msg = ErrorFinder.getError(error)
+        val error_msg = ErrorFinder.getErrorMsg(error)
         register_txt_error_msg.text = error_msg
         register_txt_error_msg.visibility = View.VISIBLE
     }

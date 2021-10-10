@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.training">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".application.MainApplication"
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StadiumReserver">
         <activity
-            android:name="com.training.fakeactivities.FakeLoginActivity"
+            android:name="com.training.fakeactivities.FakeTestActivity"
             android:exported="true"
             android:label="@string/title_activity_fake_login"
             android:theme="@style/Theme.StadiumReserver.NoActionBar" />

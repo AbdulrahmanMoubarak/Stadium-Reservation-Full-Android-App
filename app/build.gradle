@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,6 +39,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -52,6 +56,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'com.google.firebase:firebase-database:20.0.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 
@@ -95,7 +100,16 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.3.6"
 
     //preference manager
-    implementation "androidx.preference:preference:1.1.1'"
+    implementation "androidx.preference:preference:1.1.1"
 
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+
+    //coroutines test
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1'
+
+    //other testing
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
 }

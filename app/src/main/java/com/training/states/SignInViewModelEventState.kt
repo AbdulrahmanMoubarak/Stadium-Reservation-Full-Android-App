@@ -1,4 +1,4 @@
-package com.training.util.states
+package com.training.states
 
 sealed class SignInViewModelEventState {
     object ProceedLogin: SignInViewModelEventState()

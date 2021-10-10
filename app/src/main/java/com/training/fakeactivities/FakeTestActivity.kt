@@ -4,14 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.training.ui.common.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FakeLoginActivity : AppCompatActivity() {
+class FakeTestActivity : AppCompatActivity() {
     val CONTENT_VIEW_ID = 10101010
-    lateinit var fragment: LoginFragment
+    lateinit var fragment: Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var frame = FrameLayout(this)
@@ -24,5 +25,9 @@ class FakeLoginActivity : AppCompatActivity() {
         fragment = LoginFragment()
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
         ft.add(CONTENT_VIEW_ID, fragment).commit()
+    }
+
+    fun setTestFragment(fragment : Fragment){
+        this.fragment = fragment
     }
 }

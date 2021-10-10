@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.repository.SignInRepository
-import com.training.util.states.SignInState
-import com.training.util.states.SignInViewModelEventState
+import com.training.states.SignInState
+import com.training.states.SignInViewModelEventState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -27,7 +27,8 @@ constructor(
     val loginState: StateFlow<SignInState<UserModel>>
         get() = _loginState
 
-    suspend fun setStateEvent(stateEvent: SignInViewModelEventState, data: Any) {
+     fun setStateEvent(stateEvent: SignInViewModelEventState, data: Any) {
+
         when (stateEvent) {
             is SignInViewModelEventState.ProceedLogin -> {
                 val user: LoginModel = data as LoginModel
@@ -46,5 +47,4 @@ constructor(
             }
         }
     }
-
 }

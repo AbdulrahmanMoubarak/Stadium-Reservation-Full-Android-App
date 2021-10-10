@@ -12,15 +12,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.training.R
+import com.training.factory.UserActivityFactory
 import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.ui.admin.AdminActivity
 import com.training.ui.customer.CustomerActivity
 import com.training.ui.owner.OwnerActivity
-import com.training.util.ErrorFinder
-import com.training.util.ItemHasherSHA256
-import com.training.util.states.SignInState
-import com.training.util.states.SignInViewModelEventState
+import com.training.util.validation.ErrorFinder
+import com.training.util.encryption.ItemHasherSHA256
+import com.training.states.SignInState
+import com.training.states.SignInViewModelEventState
 import com.training.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -47,7 +48,7 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             val email = editTextEmail.text.toString()
-            val password = ItemHasherSHA256.hashItem(editTextPassword.text.toString())
+            val password = ItemHasherSHA256.hashItem("password")
             viewModel.scope.launch{
                 viewModel.setStateEvent(
                     SignInViewModelEventState.ProceedLogin,
@@ -60,7 +61,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
-
 
     private fun subscribeObserver(){
         lifecycleScope.launchWhenStarted {
@@ -92,7 +92,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showErrorMsg(error: Int){
-        val error_msg = ErrorFinder.getError(error)
+        val error_msg = ErrorFinder.getErrorMsg(error)
         login_txt_error_msg.text = error_msg
         login_txt_error_msg.visibility = View.VISIBLE
     }
@@ -103,27 +103,18 @@ class LoginFragment : Fragment() {
 
     private fun switchActivity(user: UserModel){
         Log.d("here", "switchActivity: ")
-        var intent: Intent
-        if("Admin".equals(user.getAccessPrivilege())){
-            intent = Intent(requireActivity(), AdminActivity::class.java)
-        }
-        else if("Owner".equals(user.getAccessPrivilege())){
-            intent = Intent(requireActivity(), OwnerActivity::class.java)
-        }
-        else{
-            intent = Intent(requireActivity(), CustomerActivity::class.java)
-        }
-
-        intent.apply {
+        val intent = Intent(
+            requireActivity(),
+            UserActivityFactory().getActivityClass(user.getAccessPrivilege())
+        ).apply {
             putExtra("user", user)
         }
-
         startActivity(intent)
     }
 
     private fun saveLoginData(user: UserModel){
-        var sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
-        var editor = sp.edit()
+        val sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
+        val editor = sp.edit()
         editor.apply {
             putBoolean("logged", true)
             putString("user type", user.getAccessPrivilege())
