@@ -33,7 +33,7 @@ constructor(
                 emit(s)
             }
         }
-    }.launchIn()
+    }
 
     // returns user with privilege if entry data is valid
     private suspend fun validateLogin_Database(
