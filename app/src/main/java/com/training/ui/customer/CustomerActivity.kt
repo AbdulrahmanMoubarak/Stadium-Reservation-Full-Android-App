@@ -12,6 +12,6 @@ class CustomerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_customer)
 
         val user: UserModel = intent.getSerializableExtra("user") as UserModel
-        textViewCustomer.text = textViewCustomer.text.toString() + user.first_name
+        textViewCustomer.text = textViewCustomer.text.toString() + user.first_name + ", ${user.access_privilege} , ${user.phone}"
     }
 }

@@ -1,6 +1,7 @@
 package com.training.di
 
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.training.firebase.FirebaseInitialScriptRunner
 import dagger.Module
 import dagger.Provides
@@ -16,7 +17,7 @@ object FirebaseScriptRunnerModule {
 
     @Singleton
     @Provides
-    fun provideFirebaseInitialScriptRunner(firebaseDatabase: FirebaseDatabase): FirebaseInitialScriptRunner {
+    fun provideFirebaseInitialScriptRunner(firebaseDatabase: FirebaseFirestore): FirebaseInitialScriptRunner {
         return FirebaseInitialScriptRunner(firebaseDatabase)
     }
 

@@ -17,5 +17,6 @@ class ErrorMsg {
         val UNEXPECTED_ERROR_MSG = "Unexpected error!"
         val NETWORK_ERROR_MSG = "Netwok error!"
         val DISCONNECTED_MSG = "You must have stable network connection!"
+        val INVALID_USER_MSG = "Invalid user"
     }
 }

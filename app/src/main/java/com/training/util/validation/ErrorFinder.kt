@@ -81,6 +81,12 @@ class ErrorFinder {
             else if (err == SignInDataError.PHONE_ALREADY_EXISTS) {
                 return ErrorMsg.PHONE_ALREADY_EXISTS_MSG
             }
+            else if (err == SignInDataError.NETWORK_ERROR) {
+                return ErrorMsg.NETWORK_ERROR_MSG
+            }
+            else if (err == SignInDataError.INVALID_USER) {
+                return ErrorMsg.INVALID_USER_MSG
+            }
             else {
                 return ErrorMsg.UNEXPECTED_ERROR_MSG
             }

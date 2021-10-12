@@ -5,26 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
-import com.training.model.UserModel
-import com.training.util.validation.ErrorFinder
-import com.training.util.encryption.ItemEncryptorASE
 import com.training.util.encryption.ItemHasherSHA256
-import com.training.states.SignInState
-import com.training.states.SignInViewModelEventState
-import com.training.viewmodels.SignInViewModel
+import com.training.util.validation.ErrorFinder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_register.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
-    private val viewModel: SignInViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,20 +34,22 @@ class RegisterFragment : Fragment() {
         registerButton.setOnClickListener {
             val email = reg_email.text.toString()
             val password = ItemHasherSHA256.hashItem(reg_pass.text.toString())
-            val phone = String(ItemEncryptorASE().encrypt(requireContext() ,reg_phone.text.toString()))
+           // val phone = String(ItemEncryptorASE().encrypt(requireContext() ,reg_phone.text.toString()))
             val fname = reg_fname.text.toString()
             val lname = reg_lname.text.toString()
-
+            /*
             viewModel.scope.launch{
                 viewModel.setStateEvent(
                     SignInViewModelEventState.ProceedRegister,
                     UserModel(email, password,fname,lname, phone)
                 )
             }
+             */
         }
     }
 
     private fun subscribeObserver(){
+        /*
         lifecycleScope.launchWhenStarted {
             viewModel.loginState.collect {
                 when(it){
@@ -80,6 +72,8 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
+
+         */
     }
 
     private fun showErrorMsg(error: Int){

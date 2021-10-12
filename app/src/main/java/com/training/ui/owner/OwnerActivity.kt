@@ -12,6 +12,6 @@ class OwnerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_owner)
 
         val user: UserModel = intent.getSerializableExtra("user") as UserModel
-        textViewOwner.text = textViewOwner.text.toString() + user.first_name
+        textViewOwner.text = textViewOwner.text.toString() + user.first_name+ ", ${user.access_privilege}"
     }
 }

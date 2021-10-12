@@ -18,5 +18,6 @@ class SignInDataError {
         val NETWORK_ERROR = -13 //online
         val DISCONNECTED = -14 // online
         val UNEXPECTED_ERROR = -15
+        val INVALID_USER = -16
     }
 }

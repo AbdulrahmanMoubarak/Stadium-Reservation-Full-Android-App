@@ -59,17 +59,17 @@ class SplashFragment : Fragment() {
             sp.getString("fname", "").toString(),
             sp.getString("lname", "").toString(),
             sp.getString("phone", "").toString(),
-        ).apply {
-            setId(sp.getInt("id", -1))
-            setAccessPrivilege(sp.getString("user type", "customer").toString())
-        }
+            sp.getInt("id", 0),
+            sp.getString("user type", "customer").toString(),
+            sp.getBoolean("first usage", false)
+        )
         return user
     }
 
     private fun navigateToUserActivity(user: UserModel){
         val intent = Intent(
             requireActivity(),
-            UserActivityFactory().getActivityClass(user.getAccessPrivilege())
+            UserActivityFactory().getActivityClass(user.access_privilege)
         ).apply {
             putExtra("user", user)
         }

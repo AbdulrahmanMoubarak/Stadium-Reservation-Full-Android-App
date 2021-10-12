@@ -5,14 +5,19 @@ import java.security.MessageDigest
 class ItemHasherSHA256 {
     companion object {
         fun hashItem(item: String): String {
-            val bytes = this.toString().toByteArray()
-            val md = MessageDigest.getInstance("SHA-256")
-            val digest = md.digest(bytes)
-            return digest.fold("", { str, it -> str + "%02x".format(it) })
-        }
-
-        fun compareHashed(item: String, hashed_item: String): Boolean {
-            return hashed_item.equals(hashItem(item))
+            return try {
+                val digest: MessageDigest = MessageDigest.getInstance("SHA-256")
+                val hash: ByteArray = digest.digest(item.toByteArray(charset("UTF-8")))
+                val hexString = StringBuffer()
+                for (i in hash.indices) {
+                    val hex = Integer.toHexString(0xff and hash[i].toInt())
+                    if (hex.length == 1) hexString.append('0')
+                    hexString.append(hex)
+                }
+                hexString.toString()
+            } catch (ex: Exception) {
+                throw RuntimeException(ex)
+            }
         }
     }
 }

@@ -12,6 +12,6 @@ class AdminActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin)
 
         val user: UserModel = intent.getSerializableExtra("user") as UserModel
-        textViewAdmin.text = textViewAdmin.text.toString() + user.first_name
+        textViewAdmin.text = textViewAdmin.text.toString() + user.first_name + ", ${user.access_privilege}"
     }
 }

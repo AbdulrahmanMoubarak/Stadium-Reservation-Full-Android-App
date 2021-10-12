@@ -9,12 +9,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StadiumReserver">
+        android:theme="@style/Theme.StadiumReserver"
+        android:screenOrientation="portrait">
+
         <activity
             android:name="com.training.fakeactivities.FakeTestActivity"
             android:exported="true"
             android:label="@string/title_activity_fake_login"
-            android:theme="@style/Theme.StadiumReserver.NoActionBar" />
+            android:theme="@style/Theme.StadiumReserver.NoActionBar"
+            />
+
         <activity
             android:name=".ui.owner.OwnerActivity"
             android:exported="true" />
