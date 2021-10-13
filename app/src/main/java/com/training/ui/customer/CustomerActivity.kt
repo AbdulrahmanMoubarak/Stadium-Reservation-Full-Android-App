@@ -14,4 +14,7 @@ class CustomerActivity : AppCompatActivity() {
         val user: UserModel = intent.getSerializableExtra("user") as UserModel
         textViewCustomer.text = textViewCustomer.text.toString() + user.first_name + ", ${user.access_privilege} , ${user.phone}"
     }
+    override fun onBackPressed() {
+        finish()
+    }
 }

@@ -10,7 +10,7 @@ import com.training.ui.common.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FakeTestActivity : AppCompatActivity() {
+class FakeLoginFragmentTestActivity : AppCompatActivity() {
     val CONTENT_VIEW_ID = 10101010
     lateinit var fragment: Fragment
     override fun onCreate(savedInstanceState: Bundle?) {

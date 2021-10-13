@@ -1,9 +1,6 @@
 package com.training.factory
 
-import com.training.exceptions.InvalidPasswordException
-import com.training.exceptions.InvalidUserException
-import com.training.exceptions.NetworkException
-import com.training.exceptions.UnknownErrorException
+import com.training.exceptions.*
 
 class AppExceptionFactory(){
 
@@ -23,6 +20,10 @@ class AppExceptionFactory(){
 
             "InvalidPasswordException".lowercase()->{
                 return InvalidPasswordException()
+            }
+
+            "EmailAlreadyExistsException".lowercase()->{
+                return EmailAlreadyExistsException()
             }
 
             else ->{

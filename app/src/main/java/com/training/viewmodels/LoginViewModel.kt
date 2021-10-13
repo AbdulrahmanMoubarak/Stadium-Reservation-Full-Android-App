@@ -11,7 +11,9 @@ import com.training.exceptions.UnknownErrorException
 import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.repository.LoginRepository
+import com.training.repository.LoginRepositoryInterface
 import com.training.states.SignInState
+import com.training.util.encryption.ItemHasherSHA256
 import com.training.util.validation.ErrorFinder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,8 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel
 @Inject constructor(
-    private val repository: LoginRepository
-): ViewModel() {
+    private val repository: LoginRepositoryInterface
+) : ViewModel() {
 
     private val _loginState: MutableLiveData<SignInState<UserModel>> =
         MutableLiveData<SignInState<UserModel>>()
@@ -29,44 +31,63 @@ class LoginViewModel
     val loginState: MutableLiveData<SignInState<UserModel>>
         get() = _loginState
 
-    fun validateLogin(user: LoginModel){
+    fun validateLogin(user: LoginModel) {
         _loginState.postValue(SignInState.Loading)
         viewModelScope.launch {
             try {
                 val err = validateInput(user.email, user.password)
-                if(err > -1) {
+                if (err > -1) {
                     val user = repository.getUserData(user.getFirebaseFormat())
                     if (user == null) {
                         _loginState.postValue(SignInState.Error(UnknownErrorException().id))
                         Log.d("here", "validateLogin: su")
                         return@launch
-                    }
-                    else{
+                    } else {
                         _loginState.postValue(SignInState.Success(user.getViewFormat()))
                         return@launch
                     }
-                }else{
+                } else {
                     _loginState.postValue(SignInState.Error(err))
                     return@launch
                 }
-            }
-            catch (e: InvalidUserException){
+            } catch (e: InvalidUserException) {
                 _loginState.postValue(SignInState.Error(e.id))
                 return@launch
-            }catch (e: NetworkException){
+            } catch (e: NetworkException) {
                 _loginState.postValue(SignInState.Error(e.id))
                 return@launch
-            }catch (e: InvalidPasswordException){
+            } catch (e: InvalidPasswordException) {
                 _loginState.postValue(SignInState.Error(e.id))
                 return@launch
-            } catch (e: UnknownErrorException){
+            } catch (e: UnknownErrorException) {
                 _loginState.postValue(SignInState.Error(e.id))
                 return@launch
             }
         }
     }
 
-    private fun validateInput(email: String, password:String):Int{
+    fun updatePassword(user: UserModel, new_pass: String) {
+        val err = ErrorFinder.getPasswordError(new_pass)
+        if(err > -1) {
+            val hashed_pass = ItemHasherSHA256.hashItem(new_pass)
+            val firebase_user = user.getFirebaseFormat()
+            _loginState.postValue(SignInState.Loading)
+            viewModelScope.launch {
+                try {
+                    repository.changePassword(firebase_user.email, hashed_pass, true)
+                    _loginState.postValue(SignInState.OperationSuccess)
+                    return@launch
+                } catch (e: UnknownErrorException) {
+                    _loginState.postValue(SignInState.Error(e.id))
+                    return@launch
+                }
+            }
+        }else{
+            _loginState.postValue(SignInState.Error(err))
+        }
+    }
+
+    private fun validateInput(email: String, password: String): Int {
         return ErrorFinder.getError(LoginModel(email, password))
     }
 }

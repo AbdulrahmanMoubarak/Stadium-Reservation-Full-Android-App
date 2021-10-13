@@ -1,4 +1,4 @@
-package com.training.ui.common
+package com.training.ui.admin
 
 import android.content.Context
 import android.content.Intent
@@ -6,10 +6,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -19,24 +19,23 @@ import com.training.model.UserModel
 import com.training.states.SignInState
 import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.SignInDataError
-import com.training.util.encryption.ItemHasherSHA256
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_owner_registeration.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_register.txt_nav_reg
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
-
+class OwnerRegisterationFragment : Fragment() {
     private val viewModel: RegisterViewModel by viewModels()
-    private lateinit var myUser: UserModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        return inflater.inflate(R.layout.fragment_owner_registeration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,17 +45,13 @@ class RegisterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        txt_nav_reg.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-        }
-
-        registerButton.setOnClickListener {
+        Admin_add_registerButton.setOnClickListener {
             if(isConnected()) {
-                val email = reg_email.text.toString()
-                val password = reg_pass.text.toString()
-                val phone = reg_phone.text.toString()
-                val fname = reg_fname.text.toString()
-                val lname = reg_lname.text.toString()
+                val email = Admin_add_reg_email.text.toString()
+                val password = Admin_add_reg_pass.text.toString()
+                val phone = Admin_add_reg_phone.text.toString()
+                val fname = Admin_add_reg_fname.text.toString()
+                val lname = Admin_add_reg_lname.text.toString()
                 val user = UserModel(
                     email,
                     password,
@@ -64,10 +59,9 @@ class RegisterFragment : Fragment() {
                     lname,
                     phone,
                     id = 0,
-                    AccessPrivilege.CUSTOMER,
+                    AccessPrivilege.OWNER,
                     true
                 )
-                myUser = user
                 viewModel.addUser(user)
             }
             else{
@@ -89,9 +83,16 @@ class RegisterFragment : Fragment() {
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
                     val state  = data as SignInState.OperationSuccess
-                    saveUserData(myUser)
-                    switchActivity(myUser)
-                    requireActivity().finish()
+                    /////
+                    findNavController().navigate(R.id.action_ownerRegisterationFragment_to_addOwnerFragment)
+                    if (view != null) {
+                        Snackbar.make(
+                            view!!,
+                            "Successfully added owner",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    //////
                 }
 
                 SignInState.Error::class ->{
@@ -105,17 +106,6 @@ class RegisterFragment : Fragment() {
     }
 
 
-    private fun switchActivity(user: UserModel){
-        Log.d("here", "switchActivity: ")
-        val intent = Intent(
-            requireActivity(),
-            UserActivityFactory().getActivityClass(user.access_privilege)
-        ).apply {
-            putExtra("user", user)
-        }
-        startActivity(intent)
-    }
-
     private fun showErrorMsg(error: Int){
         val error_msg = ErrorFinder.getErrorMsg(error)
         register_txt_error_msg.text = error_msg
@@ -123,7 +113,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun displayProgressbar(isDisplayed:Boolean){
-        progress_bar_register.visibility = if(isDisplayed) View.VISIBLE else View.GONE
+        Admin_add_progress_bar_register.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 
     private fun isConnected(): Boolean{
@@ -132,19 +122,4 @@ class RegisterFragment : Fragment() {
         return activeNetwork?.isConnectedOrConnecting == true
     }
 
-    private fun saveUserData(user: UserModel){
-        val sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        editor.apply {
-            putBoolean("logged", true)
-            putString("user type", user.access_privilege)
-            putString("email", user.email)
-            putString("fname", user.first_name)
-            putString("lname", user.last_name)
-            putString("password", user.password)
-            putString("phone", user.phone)
-            putInt("id", user.id)
-            putBoolean("first usage", user.first_usage)
-        }.apply()
-    }
 }

@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.training">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_stadium_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StadiumReserver"
-        android:screenOrientation="portrait">
-
+        android:theme="@style/Theme.StadiumReserver">
         <activity
-            android:name="com.training.fakeactivities.FakeTestActivity"
+            android:name=".fakeactivities.FakeChangePasswordFragmentTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".fakeactivities.FakeLoginFragmentTestActivity"
             android:exported="true"
             android:label="@string/title_activity_fake_login"
-            android:theme="@style/Theme.StadiumReserver.NoActionBar"
-            />
-
+            android:theme="@style/Theme.StadiumReserver.NoActionBar" />
         <activity
             android:name=".ui.owner.OwnerActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.customer.CustomerActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.admin.AdminActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.common.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

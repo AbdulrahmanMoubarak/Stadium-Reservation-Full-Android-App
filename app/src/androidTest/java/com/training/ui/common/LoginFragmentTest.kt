@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.training.R
 import com.training.factory.CommonFragmentFactory
-import com.training.fakeactivities.FakeTestActivity
+import com.training.fakeactivities.FakeLoginFragmentTestActivity
 import com.training.util.constants.ErrorMsg
 import org.junit.Before
 import org.junit.Test
@@ -19,12 +19,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4ClassRunner::class)
 class LoginFragmentTest {
 
-    private lateinit var activityScenario: ActivityScenario<FakeTestActivity>
+    private lateinit var activityScenarioLoginFragment: ActivityScenario<FakeLoginFragmentTestActivity>
 
     @Before
     fun setup() {
-        activityScenario = ActivityScenario.launch(FakeTestActivity::class.java)
-        activityScenario.onActivity {
+        activityScenarioLoginFragment = ActivityScenario.launch(FakeLoginFragmentTestActivity::class.java)
+        activityScenarioLoginFragment.onActivity {
             it.setTestFragment(
                 CommonFragmentFactory().instantiate(ClassLoader.getSystemClassLoader(),LoginFragment::class.java.name)
             )

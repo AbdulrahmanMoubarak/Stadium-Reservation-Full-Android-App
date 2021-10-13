@@ -5,18 +5,21 @@
     <string name="login">LOGIN</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
+    <string name="change_password_hint">New Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Do not have an account? Sign Up</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="title_activity_fake_login">FakeLoginActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="hi">Hi, </string>
+    <string name="change_pass">In order to ensure more security, please change the password</string>
+    <string name="proceed">Proceed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_user">Add user</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 </resources>

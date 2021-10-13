@@ -2,6 +2,7 @@ package com.training.factory
 
 import androidx.fragment.app.FragmentFactory
 import com.training.firebase.FirebaseInitialScriptRunner
+import com.training.ui.common.ChangePasswordFragment
 import com.training.ui.common.LoginFragment
 import com.training.ui.common.RegisterFragment
 import com.training.ui.common.SplashFragment
@@ -23,6 +24,10 @@ class CommonFragmentFactory : FragmentFactory() {
 
             RegisterFragment::class.java.name -> {
                 RegisterFragment()
+            }
+
+            ChangePasswordFragment::class.java.name ->{
+                ChangePasswordFragment()
             }
 
             else -> {

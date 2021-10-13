@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_screens_nav"
+    app:startDestination="@id/addOwnerFragment">
+
+    <fragment
+        android:id="@+id/addOwnerFragment"
+        android:name="com.training.ui.admin.AddOwnerFragment"
+        android:label="fragment_add_owner"
+        tools:layout="@layout/fragment_add_owner" >
+        <action
+            android:id="@+id/action_addOwnerFragment_to_ownerRegisterationFragment"
+            app:destination="@id/ownerRegisterationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/addOwnerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerRegisterationFragment"
+        android:name="com.training.ui.admin.OwnerRegisterationFragment"
+        android:label="fragment_owner_registeration"
+        tools:layout="@layout/fragment_owner_registeration" >
+        <action
+            android:id="@+id/action_ownerRegisterationFragment_to_addOwnerFragment"
+            app:destination="@id/addOwnerFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/ownerRegisterationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

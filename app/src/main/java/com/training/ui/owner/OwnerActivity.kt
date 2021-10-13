@@ -14,4 +14,7 @@ class OwnerActivity : AppCompatActivity() {
         val user: UserModel = intent.getSerializableExtra("user") as UserModel
         textViewOwner.text = textViewOwner.text.toString() + user.first_name+ ", ${user.access_privilege}"
     }
+    override fun onBackPressed() {
+        finish()
+    }
 }

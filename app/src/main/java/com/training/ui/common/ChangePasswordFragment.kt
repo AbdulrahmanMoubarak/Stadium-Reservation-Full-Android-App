@@ -6,26 +6,27 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.training.R
 import com.training.factory.UserActivityFactory
-import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.states.SignInState
-import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.SignInDataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_change_password.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.login_txt_error_msg
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class ChangePasswordFragment : Fragment() {
+
+    private lateinit var user: UserModel
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
@@ -33,32 +34,41 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return  inflater.inflate(R.layout.fragment_login, container, false)
+        user = getLoginData()
+        return inflater.inflate(R.layout.fragment_change_password, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        change_pass_header_txt.text = change_pass_header_txt.text.toString() + " " + user.first_name
         subscribeLiveData()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-
-        loginButton.setOnClickListener {
+        confirmButton.setOnClickListener {
             if(isConnected()) {
-                val email = editTextEmail.text.toString()
-                val password = editTextPassword.text.toString()
-                viewModel.validateLogin(LoginModel(email, password))
-            }else{
-                showErrorMsg(SignInDataError.NETWORK_ERROR)
+                val pass = editTextPasswordChange.text.toString()
+                viewModel.updatePassword(user, pass)
             }
+            else
+                showErrorMsg(SignInDataError.NETWORK_ERROR)
         }
+    }
 
-        txt_nav_log.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-        }
-
-        viewModel.loginState.postValue(SignInState.Filling)
+    private fun getLoginData(): UserModel {
+        var sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
+        val user = UserModel(
+            sp.getString("email", "email").toString(),
+            sp.getString("password", "pass").toString(),
+            sp.getString("fname", "").toString(),
+            sp.getString("lname", "").toString(),
+            sp.getString("phone", "").toString(),
+            sp.getInt("id", 0),
+            sp.getString("user type", "customer").toString(),
+            sp.getBoolean("first usage", false)
+        )
+        return user
     }
 
     private fun subscribeLiveData(){
@@ -69,17 +79,12 @@ class LoginFragment : Fragment() {
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.Success::class ->{
+                SignInState.OperationSuccess::class ->{
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
-                    val state  = data as SignInState.Success
-                    saveLoginData(state.data)
-                    if (state.data.first_usage == true && state.data.access_privilege != AccessPrivilege.CUSTOMER){
-                        findNavController().navigate(R.id.action_loginFragment_to_changePasswordFragment)
-                    }else {
-                        switchActivity(state.data)
-                        requireActivity().finish()
-                    }
+                    user.first_usage = false
+                    saveLoginData(user)
+                    switchActivity(user)
                 }
 
                 SignInState.Error::class ->{
@@ -94,12 +99,12 @@ class LoginFragment : Fragment() {
 
     private fun showErrorMsg(error: Int){
         val error_msg = ErrorFinder.getErrorMsg(error)
-        login_txt_error_msg.text = error_msg
-        login_txt_error_msg.visibility = View.VISIBLE
+        change_pass_txt_error_msg.text = error_msg
+        change_pass_txt_error_msg.visibility = View.VISIBLE
     }
 
     private fun displayProgressbar(isDisplayed:Boolean){
-        progress_bar_login.visibility = if(isDisplayed) View.VISIBLE else View.GONE
+        progress_bar_change_pass.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 
     private fun switchActivity(user: UserModel){
@@ -134,4 +139,5 @@ class LoginFragment : Fragment() {
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         return activeNetwork?.isConnectedOrConnecting == true
     }
+
 }

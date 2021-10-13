@@ -17,6 +17,7 @@ import com.training.model.UserModel
 import com.training.ui.admin.AdminActivity
 import com.training.ui.customer.CustomerActivity
 import com.training.ui.owner.OwnerActivity
+import com.training.util.constants.AccessPrivilege
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -35,9 +36,14 @@ class SplashFragment : Fragment() {
                 }
                 else{
                     val user = getLoginData()
-                    navigateToUserActivity(user)
+                    if(user.first_usage == true && user.access_privilege != AccessPrivilege.CUSTOMER){
+                        findNavController().navigate(R.id.action_splashFragment_to_changePasswordFragment)
+                    }else {
+                        navigateToUserActivity(user)
+                        requireActivity().finish()
+                    }
                 }
-            }, 2000)
+            }, 1000)
 
         return view
     }
