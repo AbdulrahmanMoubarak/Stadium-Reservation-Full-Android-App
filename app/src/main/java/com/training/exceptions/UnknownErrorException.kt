@@ -1,7 +1,7 @@
 package com.training.exceptions
 
-import com.training.util.constants.SignInDataError
+import com.training.util.constants.DataError
 
 class UnknownErrorException: Exception() {
-    val id = SignInDataError.UNEXPECTED_ERROR
+    val id = DataError.UNEXPECTED_ERROR
 }

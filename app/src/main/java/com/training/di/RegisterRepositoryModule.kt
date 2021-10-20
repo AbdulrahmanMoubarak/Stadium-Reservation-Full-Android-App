@@ -4,6 +4,7 @@ import com.training.firebase.FirebaseManager
 import com.training.repository.LoginRepository
 import com.training.repository.LoginRepositoryInterface
 import com.training.repository.RegisterRepository
+import com.training.repository.RegisterRepositoryInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ object RegisterRepositoryModule {
     @Provides
     fun provideRegisterRepository(
         firebaseManager: FirebaseManager,
-    ): RegisterRepository {
+    ): RegisterRepositoryInterface {
         return RegisterRepository(firebaseManager)
     }
 }

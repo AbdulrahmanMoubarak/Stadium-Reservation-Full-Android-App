@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.common.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_viewmode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:visibility="visible">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_user_avatar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.103" />
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstInput"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+            android:enabled="false">
+
+            <EditText
+                android:id="@+id/profile_fname"
+                style="@style/modifiedEditText"
+
+                android:hint="@string/first_name"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secondInput"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstInput"
+            android:enabled="false">
+
+            <EditText
+                android:id="@+id/profile_lname"
+                style="@style/modifiedEditText"
+                android:hint="@string/last_name"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/thirdInput"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secondInput"
+            android:enabled="false">
+
+            <EditText
+                android:id="@+id/profile_mobile"
+                style="@style/modifiedEditText"
+                android:hint="@string/mobile_number"
+                android:inputType="phone"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fourthInput"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thirdInput"
+            android:enabled="false">
+
+            <EditText
+                android:id="@+id/profile_email"
+                style="@style/modifiedEditText"
+                android:hint="@string/login_email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/profile_edit"
+            style="@style/loginButton"
+            android:layout_width="147dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="48dp"
+            android:text="@string/edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fourthInput" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:id="@+id/profile_editmode"
+        android:visibility="gone">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_pic_edit"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_user_svgrepo_com"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.055" />
+
+        <TextView
+            android:id="@+id/edit_txt_error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/redError"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic_edit" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstInput_edit"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic_edit">
+
+            <EditText
+                android:id="@+id/profile_fname_edit"
+                style="@style/modifiedEditText"
+
+                android:hint="@string/first_name"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secondInput_edit"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstInput_edit">
+
+            <EditText
+                android:id="@+id/profile_lname_edit"
+                style="@style/modifiedEditText"
+                android:hint="@string/last_name"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/thirdInput_edit"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secondInput_edit">
+
+            <EditText
+                android:id="@+id/profile_mobile_edit"
+                style="@style/modifiedEditText"
+                android:hint="@string/mobile_number"
+                android:inputType="phone"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fourthInput_edit"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thirdInput_edit"
+            android:enabled="false">
+
+            <EditText
+                android:id="@+id/profile_email_edit"
+                style="@style/modifiedEditText"
+                android:hint="@string/login_email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fifthInput_edit"
+            style="@style/parent"
+            android:layout_margin="30dp"
+            android:layout_marginTop="@dimen/signup_text_margin_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fourthInput_edit">
+
+            <EditText
+                android:id="@+id/profile_password_edit"
+                style="@style/modifiedEditText"
+                android:hint="@string/login_password_hint"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/profile_confirm_edit"
+            style="@style/loginButton"
+            android:layout_width="147dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.113"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fifthInput_edit"
+            />
+
+        <Button
+            android:id="@+id/profile_cancel_edit"
+            style="@style/loginButton"
+            android:layout_width="147dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.886"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fifthInput_edit" />
+
+        <ImageView
+            android:id="@+id/editPic"
+            android:layout_width="43dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="144dp"
+            android:layout_marginEnd="96dp"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_edit"
+        android:layout_width="112dp"
+        android:layout_height="101dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.26" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

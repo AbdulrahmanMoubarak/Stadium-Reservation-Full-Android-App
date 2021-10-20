@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_stadiums_nav"
+    app:startDestination="@id/stadiumsFragment">
+
+    <fragment
+        android:id="@+id/stadiumsFragment"
+        android:name="com.training.ui.admin.StadiumsFragment"
+        android:label="fragment_stadiums"
+        tools:layout="@layout/fragment_stadiums" >
+        <action
+            android:id="@+id/action_stadiumsFragment_to_stadiumRegisterationFragment"
+            app:destination="@id/stadiumRegisterationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/stadiumsFragment" />
+        <action
+            android:id="@+id/action_stadiumsFragment_to_stadiumViewFragment"
+            app:destination="@id/stadiumViewFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/stadiumRegisterationFragment"
+        android:name="com.training.ui.admin.StadiumRegisterationFragment"
+        android:label="fragment_stadium_registeration"
+        tools:layout="@layout/fragment_stadium_registeration" >
+        <action
+            android:id="@+id/action_stadiumRegisterationFragment_to_stadiumsFragment"
+            app:destination="@id/stadiumsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_stadiumRegisterationFragment_to_stadiumMapFragment"
+            app:destination="@id/stadiumMapFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/stadiumRegisterationFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_stadiumRegisterationFragment_to_inventoryFillFragment"
+            app:destination="@id/inventoryFillFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/stadiumMapFragment"
+        android:name="com.training.ui.admin.StadiumMapFragment"
+        android:label="fragment_stadium_map"
+        tools:layout="@layout/fragment_stadium_map" >
+        <action
+            android:id="@+id/action_stadiumMapFragment_to_stadiumRegisterationFragment"
+            app:destination="@id/stadiumRegisterationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/stadiumMapFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/inventoryFillFragment"
+        android:name="com.training.ui.admin.InventoryFillFragment"
+        android:label="fragment_inventory_fill"
+        tools:layout="@layout/fragment_inventory_fill" >
+        <action
+            android:id="@+id/action_inventoryFillFragment_to_stadiumRegisterationFragment"
+            app:destination="@id/stadiumRegisterationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_inventoryFillFragment_to_stadiumsFragment"
+            app:destination="@id/stadiumsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/stadiumsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/stadiumViewFragment"
+        android:name="com.training.ui.admin.StadiumViewFragment"
+        android:label="fragment_stadium_view"
+        tools:layout="@layout/fragment_stadium_view" >
+        <action
+            android:id="@+id/action_stadiumViewFragment_to_ownerLinkFragment"
+            app:destination="@id/ownerLinkFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/stadiumViewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerLinkFragment"
+        android:name="com.training.ui.admin.OwnerLinkFragment"
+        android:label="fragment_owner_link"
+        tools:layout="@layout/fragment_owner_link" >
+        <action
+            android:id="@+id/action_ownerLinkFragment_to_stadiumViewFragment"
+            app:destination="@id/stadiumViewFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/ownerLinkFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

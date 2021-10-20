@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable-v24/login_button_bk.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/blank_img.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/circe.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/circle.xml" value="0.13802083333333334" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/ic_baseline_add.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/ic_baseline_add_location.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.13802083333333334" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/ic_baseline_users.xml" value="0.2866666666666667" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/drawable/ic_user_svgrepo_com.xml" value="0.15989583333333332" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_admin.xml" value="0.275" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_customer.xml" value="0.275" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/activity_fake_change_password_fragment_test.xml" value="0.275" />
@@ -12,9 +21,24 @@
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/content_fake_login.xml" value="0.176" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_add_owner.xml" value="0.2609375" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_change_password.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_inventory_fill.xml" value="0.275" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_login.xml" value="0.14375" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_owner_link.xml" value="0.2078804347826087" />
         <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_owner_registeration.xml" value="0.275" />
-        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_register.xml" value="0.39260312944523473" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_profile.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_register.xml" value="0.2" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_stadium_map.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_stadium_registeration.xml" value="0.264" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_stadium_view.xml" value="0.2078804347826087" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_stadiums.xml" value="0.4" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_stadiums_main.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_user_view.xml" value="0.2078804347826087" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_users.xml" value="0.264" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/fragment_users_main.xml" value="0.275" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/owner_recycled_view.xml" value="0.25" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/owner_recycler_view.xml" value="0.2078804347826087" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/layout/stadiums_item_view.xml" value="0.2078804347826087" />
+        <entry key="..\:/Android project/StadiumReserver/app/src/main/res/menu/admin_bottom_menu.xml" value="0.275" />
         <entry key="..\:/Users/oddal/AndroidStudioProjects/StadiumReserver/app/src/main/res/drawable-v24/login_button_bk.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/oddal/AndroidStudioProjects/StadiumReserver/app/src/main/res/drawable/ic_login_bk.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/oddal/AndroidStudioProjects/StadiumReserver/app/src/main/res/drawable/login_shape_bk.xml" value="0.15989583333333332" />

@@ -15,13 +15,11 @@ import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
 import com.training.states.SignInState
-import com.training.util.constants.SignInDataError
+import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_change_password.*
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.login_txt_error_msg
 
 @AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
@@ -52,7 +50,7 @@ class ChangePasswordFragment : Fragment() {
                 viewModel.updatePassword(user, pass)
             }
             else
-                showErrorMsg(SignInDataError.NETWORK_ERROR)
+                showErrorMsg(DataError.NETWORK_ERROR)
         }
     }
 
@@ -64,7 +62,6 @@ class ChangePasswordFragment : Fragment() {
             sp.getString("fname", "").toString(),
             sp.getString("lname", "").toString(),
             sp.getString("phone", "").toString(),
-            sp.getInt("id", 0),
             sp.getString("user type", "customer").toString(),
             sp.getBoolean("first usage", false)
         )
@@ -129,7 +126,6 @@ class ChangePasswordFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
-            putInt("id", user.id)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }

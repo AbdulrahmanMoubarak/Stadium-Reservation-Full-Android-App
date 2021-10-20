@@ -4,6 +4,9 @@ import com.training.factory.AppExceptionFactory
 import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.repository.LoginRepositoryInterface
+import com.training.util.constants.Encryption
+import com.training.util.encryption.ItemEncryptorASE
+import com.training.util.encryption.ItemHasherSHA256
 
 class FakeLoginRepository: LoginRepositoryInterface {
 
@@ -38,7 +41,15 @@ class FakeLoginRepository: LoginRepositoryInterface {
         checkinvalidUserkError()
         checkUnknownError()
 
-        return UserModel()
+        return UserModel(
+            "email@gmail.com",
+            ItemHasherSHA256.hashItem("pass"),
+            "Ahmad",
+            "Salah",
+            ItemEncryptorASE().encrypt("01012151369", Encryption.KEY),
+            "customer",
+            false
+        )
     }
 
     override suspend fun changePassword(

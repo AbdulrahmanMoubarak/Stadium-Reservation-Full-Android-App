@@ -2,7 +2,6 @@ package com.training.util.constants
 
 class AppAdmin {
     companion object{
-        val ID = 1520
         val EMAIL = "adminFirst@stadium.com"
         val FNAME = "Bill"
         val LNAME = "Goldberg"

@@ -65,7 +65,6 @@ class SplashFragment : Fragment() {
             sp.getString("fname", "").toString(),
             sp.getString("lname", "").toString(),
             sp.getString("phone", "").toString(),
-            sp.getInt("id", 0),
             sp.getString("user type", "customer").toString(),
             sp.getBoolean("first usage", false)
         )

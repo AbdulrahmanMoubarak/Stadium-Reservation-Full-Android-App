@@ -1,7 +1,7 @@
 package com.training.exceptions
 
-import com.training.util.constants.SignInDataError
+import com.training.util.constants.DataError
 
 class InvalidUserException: Exception(){
-    val id = SignInDataError.INVALID_USER
+    val id = DataError.INVALID_USER
 }

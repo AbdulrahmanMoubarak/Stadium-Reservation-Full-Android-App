@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_users_nav"
+    app:startDestination="@id/usersFragment">
+
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.training.ui.admin.UsersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_ownerRegisterationFragment"
+            app:destination="@id/ownerRegisterationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_usersFragment_to_userViewFragment"
+            app:destination="@id/userViewFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerRegisterationFragment"
+        android:name="com.training.ui.admin.OwnerRegisterationFragment"
+        android:label="fragment_owner_registeration"
+        tools:layout="@layout/fragment_owner_registeration" >
+        <action
+            android:id="@+id/action_ownerRegisterationFragment_to_usersFragment"
+            app:destination="@id/usersFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userViewFragment"
+        android:name="com.training.ui.admin.UserViewFragment"
+        android:label="fragment_user_view"
+        tools:layout="@layout/fragment_user_view" />
+</navigation>

@@ -3,32 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/admin_screens_nav"
-    app:startDestination="@id/addOwnerFragment">
-
+    app:startDestination="@id/usersFragmentMain">
     <fragment
-        android:id="@+id/addOwnerFragment"
-        android:name="com.training.ui.admin.AddOwnerFragment"
-        android:label="fragment_add_owner"
-        tools:layout="@layout/fragment_add_owner" >
-        <action
-            android:id="@+id/action_addOwnerFragment_to_ownerRegisterationFragment"
-            app:destination="@id/ownerRegisterationFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/addOwnerFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/profileFragment2"
+        android:name="com.training.ui.common.ProfileFragment"
+        android:label="profile"
+        tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/ownerRegisterationFragment"
-        android:name="com.training.ui.admin.OwnerRegisterationFragment"
-        android:label="fragment_owner_registeration"
-        tools:layout="@layout/fragment_owner_registeration" >
-        <action
-            android:id="@+id/action_ownerRegisterationFragment_to_addOwnerFragment"
-            app:destination="@id/addOwnerFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/ownerRegisterationFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/usersFragmentMain"
+        android:name="com.training.ui.admin.UsersFragmentMain"
+        android:label="users"
+        tools:layout="@layout/fragment_users_main" />
+    <fragment
+        android:id="@+id/stadiumsFragmentMain"
+        android:name="com.training.ui.admin.StadiumsFragmentMain"
+        android:label="fragment_stadiums_main"
+        tools:layout="@layout/fragment_stadiums_main" />
 </navigation>

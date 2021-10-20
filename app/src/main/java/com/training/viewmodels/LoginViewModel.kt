@@ -34,35 +34,40 @@ class LoginViewModel
     fun validateLogin(user: LoginModel) {
         _loginState.postValue(SignInState.Loading)
         viewModelScope.launch {
-            try {
-                val err = validateInput(user.email, user.password)
-                if (err > -1) {
-                    val user = repository.getUserData(user.getFirebaseFormat())
-                    if (user == null) {
-                        _loginState.postValue(SignInState.Error(UnknownErrorException().id))
-                        Log.d("here", "validateLogin: su")
-                        return@launch
-                    } else {
-                        _loginState.postValue(SignInState.Success(user.getViewFormat()))
-                        return@launch
-                    }
+            validate_login_suspend(user)
+        }
+    }
+
+    suspend fun validate_login_suspend(user: LoginModel){
+
+        try {
+            val err = validateInput(user.email, user.password)
+            if (err > -1) {
+                val user = repository.getUserData(user.getFirebaseFormat())
+                if (user == null) {
+                    _loginState.postValue(SignInState.Error(UnknownErrorException().id))
+                    Log.d("here", "validateLogin: su")
+                    return
                 } else {
-                    _loginState.postValue(SignInState.Error(err))
-                    return@launch
+                    _loginState.postValue(SignInState.Success(user.getViewFormat()))
+                    return
                 }
-            } catch (e: InvalidUserException) {
-                _loginState.postValue(SignInState.Error(e.id))
-                return@launch
-            } catch (e: NetworkException) {
-                _loginState.postValue(SignInState.Error(e.id))
-                return@launch
-            } catch (e: InvalidPasswordException) {
-                _loginState.postValue(SignInState.Error(e.id))
-                return@launch
-            } catch (e: UnknownErrorException) {
-                _loginState.postValue(SignInState.Error(e.id))
-                return@launch
+            } else {
+                _loginState.postValue(SignInState.Error(err))
+                return
             }
+        } catch (e: InvalidUserException) {
+            _loginState.postValue(SignInState.Error(e.id))
+            return
+        } catch (e: NetworkException) {
+            _loginState.postValue(SignInState.Error(e.id))
+            return
+        } catch (e: InvalidPasswordException) {
+            _loginState.postValue(SignInState.Error(e.id))
+            return
+        } catch (e: UnknownErrorException) {
+            _loginState.postValue(SignInState.Error(e.id))
+            return
         }
     }
 

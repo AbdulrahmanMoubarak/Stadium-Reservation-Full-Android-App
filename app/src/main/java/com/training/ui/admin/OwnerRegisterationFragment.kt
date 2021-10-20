@@ -1,7 +1,7 @@
 package com.training.ui.admin
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
@@ -14,37 +14,38 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
-import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
 import com.training.states.SignInState
 import com.training.util.constants.AccessPrivilege
-import com.training.util.constants.SignInDataError
+import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_owner_registeration.*
-import kotlinx.android.synthetic.main.fragment_register.*
-import kotlinx.android.synthetic.main.fragment_register.txt_nav_reg
+
 
 @AndroidEntryPoint
 class OwnerRegisterationFragment : Fragment() {
     private val viewModel: RegisterViewModel by viewModels()
+
+    var isLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        arguments?.let { isLoaded = it.getBoolean("loaded") }
         return inflater.inflate(R.layout.fragment_owner_registeration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeLiveData()
     }
 
     override fun onStart() {
         super.onStart()
+        subscribeLiveData()
         Admin_add_registerButton.setOnClickListener {
             if(isConnected()) {
                 val email = Admin_add_reg_email.text.toString()
@@ -58,14 +59,13 @@ class OwnerRegisterationFragment : Fragment() {
                     fname,
                     lname,
                     phone,
-                    id = 0,
                     AccessPrivilege.OWNER,
                     true
                 )
                 viewModel.addUser(user)
             }
             else{
-                showErrorMsg(SignInDataError.NETWORK_ERROR)
+                showErrorMsg(DataError.NETWORK_ERROR)
             }
         }
         viewModel.registerState.postValue(SignInState.Filling)
@@ -84,7 +84,6 @@ class OwnerRegisterationFragment : Fragment() {
                     displayProgressbar(false)
                     val state  = data as SignInState.OperationSuccess
                     /////
-                    findNavController().navigate(R.id.action_ownerRegisterationFragment_to_addOwnerFragment)
                     if (view != null) {
                         Snackbar.make(
                             view!!,
@@ -92,6 +91,8 @@ class OwnerRegisterationFragment : Fragment() {
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
+
+                    requireActivity().onBackPressed()
                     //////
                 }
 
@@ -107,15 +108,16 @@ class OwnerRegisterationFragment : Fragment() {
 
 
     private fun showErrorMsg(error: Int){
+        Admin_add_txt_error_msg.visibility = View.VISIBLE
         val error_msg = ErrorFinder.getErrorMsg(error)
-        register_txt_error_msg.text = error_msg
-        register_txt_error_msg.visibility = View.VISIBLE
+        Admin_add_txt_error_msg.text = error_msg
     }
 
     private fun displayProgressbar(isDisplayed:Boolean){
         Admin_add_progress_bar_register.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 
+    @SuppressLint("MissingPermission")
     private fun isConnected(): Boolean{
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo

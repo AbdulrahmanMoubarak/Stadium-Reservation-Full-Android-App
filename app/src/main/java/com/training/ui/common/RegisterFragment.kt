@@ -12,14 +12,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
 import com.training.states.SignInState
 import com.training.util.constants.AccessPrivilege
-import com.training.util.constants.SignInDataError
-import com.training.util.encryption.ItemHasherSHA256
+import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,7 +61,6 @@ class RegisterFragment : Fragment() {
                     fname,
                     lname,
                     phone,
-                    id = 0,
                     AccessPrivilege.CUSTOMER,
                     true
                 )
@@ -71,7 +68,7 @@ class RegisterFragment : Fragment() {
                 viewModel.addUser(user)
             }
             else{
-                showErrorMsg(SignInDataError.NETWORK_ERROR)
+                showErrorMsg(DataError.NETWORK_ERROR)
             }
         }
         viewModel.registerState.postValue(SignInState.Filling)
@@ -143,7 +140,6 @@ class RegisterFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
-            putInt("id", user.id)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }

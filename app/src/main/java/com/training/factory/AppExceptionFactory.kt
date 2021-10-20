@@ -1,5 +1,6 @@
 package com.training.factory
 
+import com.training.exceptions.KeyAlreadyExistsException
 import com.training.exceptions.*
 
 class AppExceptionFactory(){
@@ -15,7 +16,7 @@ class AppExceptionFactory(){
             }
 
             "UnknownError".lowercase()->{
-                return NetworkException()
+                return UnknownErrorException()
             }
 
             "InvalidPasswordException".lowercase()->{
@@ -24,6 +25,14 @@ class AppExceptionFactory(){
 
             "EmailAlreadyExistsException".lowercase()->{
                 return EmailAlreadyExistsException()
+            }
+
+            "KeyAlreadyExistsException".lowercase()->{
+                return KeyAlreadyExistsException()
+            }
+
+            "NoDataException".lowercase()->{
+                return NoDataException()
             }
 
             else ->{

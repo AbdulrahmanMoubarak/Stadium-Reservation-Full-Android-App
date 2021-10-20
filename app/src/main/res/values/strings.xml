@@ -17,9 +17,40 @@
     <string name="hi">Hi, </string>
     <string name="change_pass">In order to ensure more security, please change the password</string>
     <string name="proceed">Proceed</string>
+    <string name="edit">Edit</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_user">Add user</string>
+    <string name="add_stadium">Add Stadium</string>
+    <string name="confirm">confirm</string>
+    <string name="cancel">cancel</string>
+    <string name="stadium_key">Stadium key</string>
+    <string name="stadium_name">Stadium Name</string>
+    <string name="stadium_location">Stadium Location</string>
+    <string name="soccer_balls">soccer balls</string>
+    <string name="basket_balls">basket balls</string>
+    <string name="tennis_balls">tennins balls</string>
+    <string name="nets">nets</string>
+    <string name="rackets">rackets</string>
+    <string name="back">back</string>
+    <string name="setup_inventory">Setup Inventory</string>
+    <string name="click_on_map">Click on the area where the stadium exists</string>
+    <string name="no_data">No data to display</string>
+    <string name="stadium_owners">Stadium owners</string>
+    <string name="phone">Phone</string>
+    <string name="stadium">Stadium</string>
+    <string name="user_view_error">Failed to get fetch user data</string>
+    <string name="stadiums">Stadiums</string>
 
+    <string name="stadium_filter">Filter</string>
+    <string name="owner">Owner</string>
+    <string name="no_user_linked">The stadium does not belong to a user yet</string>
+    <string name="link">Link</string>
+    <string name="choose_owner">Choose a user</string>
+    <string-array name="stadium_filters">
+        <item>All</item>
+        <item>Unlinked</item>
+        <item>Linked</item>
+    </string-array>
 
 </resources>

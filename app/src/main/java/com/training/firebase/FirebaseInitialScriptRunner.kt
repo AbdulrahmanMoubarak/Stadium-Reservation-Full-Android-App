@@ -32,7 +32,6 @@ constructor(var database: FirebaseFirestore) {
                 "first_name" to AppAdmin.FNAME,
                 "last_name" to AppAdmin.LNAME,
                 "phone" to phone,
-                "id" to AppAdmin.ID,
                 "access_privilege" to AppAdmin.ACCESS_PRIVILEGE,
                 "first_usage" to true
             )
@@ -58,7 +57,6 @@ constructor(var database: FirebaseFirestore) {
             "first_name" to "AbdulRahman",
             "last_name" to "Moubarak",
             "phone" to phone2,
-            "id" to 15,
             "access_privilege" to AccessPrivilege.CUSTOMER,
             "first_usage" to true
         )

@@ -1,5 +1,6 @@
 package com.training.ui.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -18,7 +19,7 @@ import com.training.model.LoginModel
 import com.training.model.UserModel
 import com.training.states.SignInState
 import com.training.util.constants.AccessPrivilege
-import com.training.util.constants.SignInDataError
+import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,7 @@ class LoginFragment : Fragment() {
                 val password = editTextPassword.text.toString()
                 viewModel.validateLogin(LoginModel(email, password))
             }else{
-                showErrorMsg(SignInDataError.NETWORK_ERROR)
+                showErrorMsg(DataError.NETWORK_ERROR)
             }
         }
 
@@ -124,11 +125,11 @@ class LoginFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
-            putInt("id", user.id)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }
 
+    @SuppressLint("MissingPermission")
     private fun isConnected(): Boolean{
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo

@@ -1,6 +1,6 @@
 package com.training.util.constants
 
-class SignInDataError {
+class DataError {
     companion object{
         val SUCCESSFULL = 0
         val ERROR_INVALID_EMAIL = -1 //offline
@@ -19,5 +19,11 @@ class SignInDataError {
         val DISCONNECTED = -14 // online
         val UNEXPECTED_ERROR = -15
         val INVALID_USER = -16
+        val STADIUM_KEY_INVALID = -17
+        val STADIUM_KEY_EMPTY = -18
+        val STADIUM_NAME_EMPTY = -19
+        val STADIUM_LOC_EMPTY = -20
+        val KEY_ALREADY_EXISTS = -21
+        val NO_DATA = -22
     }
 }

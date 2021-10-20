@@ -18,5 +18,11 @@ class ErrorMsg {
         val NETWORK_ERROR_MSG = "Netwok error!"
         val DISCONNECTED_MSG = "You must have stable network connection!"
         val INVALID_USER_MSG = "Invalid user"
+        val STADIUM_KEY_INVALID_MSG = "Stadium key cannot contain * - / + . ! # $"
+        val STADIUM_KEY_EMPTY_MSG = "Enter Stadium Key"
+        val STADIUM_NAME_EMPTY_MSG = "Enter Stadium Name"
+        val STADIUM_LOC_EMPTY_MSG = "Enter Stadium Location"
+        val KEY_ALREADY_EXISTS_MSG = "Stadium Key is already used, try another one"
+        val NO_DATA_MSG = "No data to display"
     }
 }
