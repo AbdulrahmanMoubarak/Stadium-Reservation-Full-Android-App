@@ -2,6 +2,7 @@ package com.training.ui.common
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
@@ -11,15 +12,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.akexorcist.localizationactivity.core.LocalizationActivityDelegate
+import com.akexorcist.localizationactivity.core.OnLocaleChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
 import com.training.model.UserModel
-import com.training.states.SignInState
+import com.training.states.AppDataState
+import com.training.ui.ActivityInterface
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.EditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_profile.*
+import java.util.*
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -27,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var user: UserModel
     private val viewmodel: EditViewModel by viewModels()
     private var passEdited = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +48,13 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         user = getLoginData()
         setupView()
+
+        imgLogout.setOnClickListener {
+            updateSharedPreference(user, false)
+            navigateToMainActivity()
+            requireActivity().finish()
+        }
+
         profile_edit.setOnClickListener {
             profile_viewmode.visibility = View.GONE
             profile_editmode.visibility = View.VISIBLE
@@ -65,7 +79,17 @@ class ProfileFragment : Fragment() {
             else
                 showErrorMsg(DataError.NETWORK_ERROR)
         }
+        switchLanguage.setOnClickListener {
+            val lang = (requireActivity() as ActivityInterface).getCurrentLocale().language.toString()
+            if(lang.equals(Locale.ENGLISH.language)){
+                (requireActivity() as ActivityInterface).setLanguage("ar")
+            } else {
+                (requireActivity() as ActivityInterface).setLanguage(Locale.ENGLISH)
+            }
+            findNavController().navigate(R.id.action_profileFragment3_to_customerHomeFragment)
+        }
     }
+
 
     private fun setupView(){
         profile_fname.setText(user.first_name)
@@ -108,17 +132,17 @@ class ProfileFragment : Fragment() {
     private fun subscribeLiveData(){
         viewmodel.updateState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.Success::class -> {
-                    val tempUser = (data as SignInState.Success).data
+                AppDataState.Success::class -> {
+                    val tempUser = (data as AppDataState.Success).data
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
                     user = tempUser
-                    updateSharedPreference(tempUser)
+                    updateSharedPreference(tempUser, true)
                     setupView()
                     profile_editmode.visibility = View.GONE
                     profile_viewmode.visibility = View.VISIBLE
@@ -129,9 +153,9 @@ class ProfileFragment : Fragment() {
                     ).show()
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }
@@ -149,17 +173,19 @@ class ProfileFragment : Fragment() {
         edit_txt_error_msg.visibility = View.VISIBLE
     }
 
-    private fun updateSharedPreference(user: UserModel){
+    private fun updateSharedPreference(user: UserModel, logged: Boolean){
         val sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.apply {
-            putBoolean("logged", true)
+            putBoolean("logged", logged)
             putString("user type", user.access_privilege)
             putString("email", user.email)
             putString("fname", user.first_name)
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
+            putBoolean("linked", user.linked)
+            putString("stadium_key", user.stadium_key)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }
@@ -170,4 +196,13 @@ class ProfileFragment : Fragment() {
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         return activeNetwork?.isConnectedOrConnecting == true
     }
+
+    private fun navigateToMainActivity(){
+        Intent(requireActivity(), MainActivity::class.java).apply {
+            startActivity(this)
+        }
+    }
+
+
+
 }

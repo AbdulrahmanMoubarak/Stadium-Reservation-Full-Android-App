@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.exceptions.EmailAlreadyExistsException
 import com.training.exceptions.UnknownErrorException
+import com.training.model.ReservationModel
 import com.training.model.StadiumModel
 import com.training.model.UserModel
 import com.training.repository.EditRepository
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.validation.ErrorFinder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,14 +21,14 @@ class EditViewModel
 @Inject
 constructor(var repository: EditRepository) : ViewModel() {
 
-    private val _updateState: MutableLiveData<SignInState<UserModel>> =
-        MutableLiveData<SignInState<UserModel>>()
+    private val _updateState: MutableLiveData<AppDataState<UserModel>> =
+        MutableLiveData<AppDataState<UserModel>>()
 
-    val updateState: MutableLiveData<SignInState<UserModel>>
+    val updateState: MutableLiveData<AppDataState<UserModel>>
         get() = _updateState
 
     fun updateUserData(user: UserModel, isPassChanged: Boolean) {
-        updateState.postValue(SignInState.Loading)
+        updateState.postValue(AppDataState.Loading)
         try {
             viewModelScope.launch {
                 var err = validateInput(user)
@@ -40,30 +42,45 @@ constructor(var repository: EditRepository) : ViewModel() {
                         userTemp.password = password
                         repository.editUser(userTemp)
                     }
-                    _updateState.postValue(SignInState.Success(user))
-                    _updateState.postValue(SignInState.OperationSuccess)
+                    _updateState.postValue(AppDataState.Success(user))
+                    delay(100)
+                    _updateState.postValue(AppDataState.OperationSuccess)
                     return@launch
                 } else {
-                    _updateState.postValue(SignInState.Error(err))
+                    _updateState.postValue(AppDataState.Error(err))
                     return@launch
                 }
             }
         } catch (e: EmailAlreadyExistsException) {
-            _updateState.postValue(SignInState.Error(e.id))
+            _updateState.postValue(AppDataState.Error(e.id))
             return
         }
     }
 
     fun updateStadiumData(stadium: StadiumModel) {
-        _updateState.postValue(SignInState.Loading)
+        _updateState.postValue(AppDataState.Loading)
         try {
             viewModelScope.launch {
                 repository.editStadium(stadium)
-                _updateState.postValue(SignInState.OperationSuccess)
+                _updateState.postValue(AppDataState.OperationSuccess)
                 return@launch
             }
         } catch (e: UnknownErrorException) {
-            _updateState.postValue(SignInState.Error(e.id))
+            _updateState.postValue(AppDataState.Error(e.id))
+            return
+        }
+    }
+
+    fun removeReservation(reservation: ReservationModel){
+        _updateState.postValue(AppDataState.Loading)
+        try {
+            viewModelScope.launch {
+                repository.removeReservation(reservation)
+                _updateState.postValue(AppDataState.OperationSuccess)
+                return@launch
+            }
+        } catch (e: UnknownErrorException) {
+            _updateState.postValue(AppDataState.Error(e.id))
             return
         }
     }

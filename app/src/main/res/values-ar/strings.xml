@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stadium Reserver</string>
+    <string name="register">انشاء</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="login_email_hint">البريد الالكتروني</string>
+    <string name="login_password_hint">كلمة المرور</string>
+    <string name="change_password_hint">كلمة السر لجديدة</string>
+    <string name="signup_login_hint">تمتلك حسابا بالفعل؟ سجل الدخول</string>
+    <string name="login_signup_hint">لاتمتلك حسابا؟ انشيء حساب</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">الاسم الأخير</string>
+    <string name="mobile_number">رقم الهاتف</string>
+    <string name="title_activity_fake_login">FakeLoginActivity</string>
+    <string name="next">التالي</string>
+    <string name="previous">السابق</string>
+    <string name="hi">مرحبا، </string>
+    <string name="change_pass">للحفاظ على خصوصيتك، يرجى تغيير كلمة المرور</string>
+    <string name="proceed">متابعة</string>
+    <string name="edit">تعديل</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_user">اضافة مستخدم</string>
+    <string name="add_stadium">اضافة ستاد</string>
+    <string name="confirm">تأكيد</string>
+    <string name="cancel">الغاء</string>
+    <string name="stadium_key">رمز الاستاد</string>
+    <string name="stadium_name">اسم الاستاد</string>
+    <string name="stadium_location">الموقع</string>
+    <string name="soccer_balls">كرات القدم</string>
+    <string name="basket_balls">كرات السلة</string>
+    <string name="tennis_balls">كرات التنس</string>
+    <string name="nets">الشباك</string>
+    <string name="rackets">المضارب</string>
+    <string name="back">رجوع</string>
+    <string name="setup_inventory">اعداد المخزون</string>
+    <string name="click_on_map">اضغط على مكتن تواجد الاستاد</string>
+    <string name="no_data">لا يوجد بيانات للعرض</string>
+    <string name="stadium_owners">ملاك الاستادت</string>
+    <string name="phone">الهاتف</string>
+    <string name="stadium">الاستاد</string>
+    <string name="user_view_error">تعذر تحميل بيانات المستخدم</string>
+    <string name="stadiums">الاستادات</string>
+    <string name="stadium_filter">تصفية</string>
+    <string name="sport">الرياضة</string>
+    <string name="all">الكل</string>
+    <string name="owner">المالك</string>
+    <string name="no_user_linked">لا يوجد مالك لهذا الاستاد بعد</string>
+    <string name="link">ربط</string>
+    <string name="choose_owner">اختر المستخدم</string>
+    <string name="Schedule">جدول اليوم</string>
+    <string name="capacity">السعة</string>
+    <string name="fieldName">اسم الملعب</string>
+    <string name="fields">الملاعب</string>
+    <string name="no_fields">لا توجد ملاعب</string>
+    <string name="noStadium">أنت لا تمتلك ملعبا بعد</string>
+    <string name="active">يعمل</string>
+    <string name="available">متاح</string>
+    <string name="my_reservations">الحجوزات الخاصة بي</string>
+    <string name="no_reservations">ليس لديك حجوزات بعد</string>
+    <string name="select_stadium">اختر الاستاد</string>
+    <string name="select_game">اختر الملعب</string>
+    <string name="from">من</string>
+    <string name="to">الى</string>
+    <string name="date">التاريخ</string>
+    <string name="pick">اختر</string>
+    <string name="price">السعر/الساعة</string>
+    <string name="home">الرئيسية</string>
+    <string name="time">الوقت</string>
+    <string name="fromto">من @ الى #</string>
+    <string name="no_reservations_today">ليس لديك اي حجز اليوم</string>
+    <string name="language">العربية</string>
+    <string name="reservations">الحجوزات</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="accepted">المقبول</string>
+    <string name="rejected">المرفوض</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="removed_res">تم حذف الحجز بنجاح</string>
+    <string name="unexpectedError">خطأ غير متوقع، يرجى المحاولة مجددا</string>
+    <string name="maxHours">للأسف، لقد وصلت للحد الأقصى من وقت الحجز اليوم</string>
+    <string name="fieldRegistered">للأسف، هذا الملعب محجوز في هذا الوقت</string>
+    <string name="maxHours2">للأسف، لا يمكن حجز اكثر من ساعتين في اليوم</string>
+    <string name="res_complete">تم الحجز بنجاح</string>
+    <string name="time_select">اختر الموعد</string>
+    <string name="dateTimeChoose">اختر الوقت و التاريخ</string>
+    <string name="mustChooseTime">يجب ان تختار الوقت</string>
+    <string name="mustChooseDate">يجب ان تختار التاريخ</string>
+    <string name="egp">جنيه</string>
+    <string name="am">ص</string>
+    <string name="pm">م</string>
+    <string name="stadium_notActive">هذا الاستاد خارج الخدمة حاليا</string>
+    <string name="football">كرة قدم</string>
+    <string name="basket">كرة سلة</string>
+    <string name="tennis">تنس</string>
+    <string name="swimming">سباحة</string>
+    <string name="fieldNotAvailable">هذا الملعب غير متوفر حاليا</string>
+
+    <string-array name="stadium_filters">
+        <item>الكل</item>
+        <item>المملوكين</item>
+        <item>غير المملوكين</item>
+    </string-array>
+    <string-array name="sports">
+        <item>كرة قدم</item>
+        <item>كرة سلة</item>
+        <item>تنس</item>
+        <item>سباحة</item>
+    </string-array>
+
+    <string-array name="reservation_filters">
+        <item>الكل</item>
+        <item>المقبول</item>
+        <item>المرفوض</item>
+        <item>قيد الانتظار</item>
+    </string-array>
+</resources>

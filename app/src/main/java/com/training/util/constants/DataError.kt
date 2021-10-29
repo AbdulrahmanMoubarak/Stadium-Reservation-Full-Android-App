@@ -16,7 +16,6 @@ class DataError {
         val PHONE_ALREADY_EXISTS = -11 //online
         val ERROR_EMPTY_USERNAME = -12 //offline
         val NETWORK_ERROR = -13 //online
-        val DISCONNECTED = -14 // online
         val UNEXPECTED_ERROR = -15
         val INVALID_USER = -16
         val STADIUM_KEY_INVALID = -17
@@ -25,5 +24,7 @@ class DataError {
         val STADIUM_LOC_EMPTY = -20
         val KEY_ALREADY_EXISTS = -21
         val NO_DATA = -22
+        val KEY_DOES_NOT_EXIST = -23
+        val GAME_ALREADY_EXIST = -24
     }
 }

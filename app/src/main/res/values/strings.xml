@@ -18,7 +18,6 @@
     <string name="change_pass">In order to ensure more security, please change the password</string>
     <string name="proceed">Proceed</string>
     <string name="edit">Edit</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_user">Add user</string>
     <string name="add_stadium">Add Stadium</string>
@@ -29,7 +28,7 @@
     <string name="stadium_location">Stadium Location</string>
     <string name="soccer_balls">soccer balls</string>
     <string name="basket_balls">basket balls</string>
-    <string name="tennis_balls">tennins balls</string>
+    <string name="tennis_balls">tennis balls</string>
     <string name="nets">nets</string>
     <string name="rackets">rackets</string>
     <string name="back">back</string>
@@ -41,16 +40,76 @@
     <string name="stadium">Stadium</string>
     <string name="user_view_error">Failed to get fetch user data</string>
     <string name="stadiums">Stadiums</string>
-
     <string name="stadium_filter">Filter</string>
+    <string name="sport">Sport</string>
+    <string name="all">all</string>
     <string name="owner">Owner</string>
     <string name="no_user_linked">The stadium does not belong to a user yet</string>
     <string name="link">Link</string>
     <string name="choose_owner">Choose a user</string>
+    <string name="Schedule">Schedule for today</string>
+    <string name="capacity">Capacity</string>
+    <string name="fieldName">Filed Name</string>
+    <string name="fields">Fields</string>
+    <string name="no_fields">No fileds available</string>
+    <string name="noStadium">You do not have a stadium yet</string>
+    <string name="active">Active</string>
+    <string name="available">Available</string>
+    <string name="my_reservations">My Reservations</string>
+    <string name="no_reservations">You do not have any reservations yet</string>
+    <string name="select_stadium">Select Stadium</string>
+    <string name="select_game">Select game</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="date">date</string>
+    <string name="pick">pick</string>
+    <string name="price">Price/hour</string>
+    <string name="home">Home</string>
+    <string name="time">time</string>
+    <string name="fromto">from @ to #</string>
+    <string name="no_reservations_today">You do not have any reservations for today</string>
+    <string name="language">English</string>
+    <string name="reservations">reservations</string>
+    <string name="profile">profile</string>
+    <string name="accepted">accepted</string>
+    <string name="rejected">rejected</string>
+    <string name="pending">pending</string>
+    <string name="removed_res">Successfully removed reservation</string>
+    <string name="unexpectedError">Unexpected error, please try again</string>
+    <string name="maxHours">Sorry, you have reached daily max reservation time</string>
+    <string name="fieldRegistered">Sorry, this field is already registered at the time you selected</string>
+    <string name="maxHours2">Sorry, you can not reserve more than 2 hours a day</string>
+    <string name="res_complete">Successfully completed reservation</string>
+    <string name="time_select">time select</string>
+    <string name="dateTimeChoose">Choose Date and Time</string>
+    <string name="mustChooseTime">You have to set time</string>
+    <string name="mustChooseDate">You have to set date</string>
+    <string name="egp">EGP</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="stadium_notActive">This stadium is not active</string>
+    <string name="football">football</string>
+    <string name="basket">basketball</string>
+    <string name="tennis">tennis</string>
+    <string name="swimming">swimming</string>
+    <string name="fieldNotAvailable">This field is not available at the moment</string>
+
     <string-array name="stadium_filters">
         <item>All</item>
         <item>Unlinked</item>
         <item>Linked</item>
     </string-array>
+    <string-array name="sports">
+        <item>football</item>
+        <item>basket</item>
+        <item>tennis</item>
+        <item>swimming</item>
+    </string-array>
 
+    <string-array name="reservation_filters">
+        <item>all</item>
+        <item>accepted</item>
+        <item>rejected</item>
+        <item>pending</item>
+    </string-array>
 </resources>

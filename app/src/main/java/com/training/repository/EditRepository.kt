@@ -1,6 +1,7 @@
 package com.training.repository
 
 import com.training.firebase.FirebaseManager
+import com.training.model.ReservationModel
 import com.training.model.StadiumModel
 import com.training.model.UserModel
 import javax.inject.Inject
@@ -14,5 +15,9 @@ constructor(var firebaseManager: FirebaseManager){
 
     suspend fun editStadium(stadium: StadiumModel){
         firebaseManager.editStadium(stadium)
+    }
+
+    suspend fun removeReservation(reservationModel: ReservationModel){
+        firebaseManager.removeReservation(reservationModel)
     }
 }

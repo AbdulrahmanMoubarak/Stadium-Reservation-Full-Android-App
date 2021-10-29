@@ -6,12 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.customer.CustomerActivity">
 
-    <TextView
-        android:id="@+id/textViewCustomer"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationViewCustomer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome, "
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="350dp" />
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/customer_bottom_menu" />
+
+    <fragment
+        android:id="@+id/customerNavHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="409dp"
+        android:layout_height="673dp"
+        android:layout_marginBottom="2dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationViewCustomer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/customer_screens_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

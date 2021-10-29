@@ -1,21 +1,21 @@
-package com.training.ui.recyclerviews;
+package com.training.ui.adapters
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.findNavController
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.training.R
 import com.training.model.UserModel
 
-class OwnersAdapter() : RecyclerView.Adapter<OwnersAdapter.OwnerViewHolder>() {
-     var Item_List = ArrayList<UserModel>()
+class OwnerLinkAdapter: RecyclerView.Adapter<OwnerLinkAdapter.OwnerLinkViewHolder>() {
+    var Item_List = ArrayList<UserModel>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OwnerViewHolder {
-        return OwnerViewHolder(
+    val selectedUser = MutableLiveData<UserModel>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OwnerLinkViewHolder {
+        return OwnerLinkViewHolder(
             LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.owner_recycler_view, parent, false)
         )
@@ -23,14 +23,11 @@ class OwnersAdapter() : RecyclerView.Adapter<OwnersAdapter.OwnerViewHolder>() {
 
 
 
-    override fun onBindViewHolder(holder: OwnerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OwnerLinkViewHolder, position: Int) {
         holder.userName.setText(Item_List.get(position).first_name + " " + Item_List.get(position).last_name)
         holder.phone.setText(Item_List.get(position).phone)
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("user",Item_List.get(position))
-            }
-            it.findNavController().navigate(R.id.action_usersFragment_to_userViewFragment, bundle)
+            selectedUser.postValue(Item_List.get(position))
         }
     }
 
@@ -42,7 +39,7 @@ class OwnersAdapter() : RecyclerView.Adapter<OwnersAdapter.OwnerViewHolder>() {
         Item_List = list as ArrayList<UserModel>
     }
 
-    class OwnerViewHolder : RecyclerView.ViewHolder {
+    class OwnerLinkViewHolder : RecyclerView.ViewHolder {
 
         var userName: TextView
         var phone: TextView

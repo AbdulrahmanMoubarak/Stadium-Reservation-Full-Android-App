@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customer_screens_nav"
+    app:startDestination="@id/customerHomeFragment">
+
+    <fragment
+        android:id="@+id/customerHomeFragment"
+        android:name="com.training.ui.customer.CustomerHomeFragment"
+        android:label="fragment_customer_home"
+        tools:layout="@layout/fragment_customer_home" />
+    <fragment
+        android:id="@+id/profileFragment3"
+        android:name="com.training.ui.common.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment3_to_customerHomeFragment"
+            app:destination="@id/customerHomeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/customerHomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerReservationFragment"
+        android:name="com.training.ui.customer.CustomerReservationFragment"
+        android:label="fragment_customer_reservation"
+        tools:layout="@layout/fragment_customer_reservation" >
+        <action
+            android:id="@+id/action_customerReservationFragment_to_customerSelectStadiumFragment"
+            app:destination="@id/customerSelectStadiumFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerSelectStadiumFragment"
+        android:name="com.training.ui.customer.CustomerSelectStadiumFragment"
+        android:label="fragment_customer_select_stadium"
+        tools:layout="@layout/fragment_customer_select_stadium" >
+        <action
+            android:id="@+id/action_customerSelectStadiumFragment_to_customerSelectGameFragment"
+            app:destination="@id/customerSelectGameFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerSelectGameFragment"
+        android:name="com.training.ui.customer.CustomerSelectGameFragment"
+        android:label="fragment_customer_select_game"
+        tools:layout="@layout/fragment_customer_select_game" >
+        <action
+            android:id="@+id/action_customerSelectGameFragment_to_customerReservationFragment"
+            app:destination="@id/customerReservationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/customerReservationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

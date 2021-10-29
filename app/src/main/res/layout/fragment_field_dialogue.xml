@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".ui.owner.FieldDialogueFragment">
+
+    <Spinner
+        android:id="@+id/sports_spinner"
+        android:layout_width="251dp"
+        android:layout_height="44dp"
+        android:layout_margin="30dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/sports"
+        android:prompt="@string/sport"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/field_capacity"
+        style="@style/modifiedEditText"
+        android:layout_width="250dp"
+        android:layout_height="34dp"
+        android:layout_margin="30dp"
+        android:hint="@string/capacity"
+        android:inputType="number"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sports_spinner" />
+
+    <EditText
+        android:id="@+id/field_price"
+        style="@style/modifiedEditText"
+        android:layout_width="250dp"
+        android:layout_height="34dp"
+        android:layout_margin="30dp"
+        android:hint="@string/price"
+        android:inputType="number"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/field_capacity" />
+
+    <TextView
+        android:id="@+id/activated"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/available"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/field_price" />
+
+    <Switch
+        android:id="@+id/switchAvailable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/field_price"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

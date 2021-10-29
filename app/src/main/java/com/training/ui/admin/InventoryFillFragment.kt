@@ -2,7 +2,6 @@ package com.training.ui.admin
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.training.R
 import com.training.model.InventoryModel
 import com.training.model.StadiumModel
-import com.training.states.SignInState
-import com.training.util.constants.AccessPrivilege
+import com.training.states.AppDataState
 import com.training.util.validation.ErrorFinder
-import com.training.viewmodels.LoginViewModel
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_inventory_fill.*
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_stadium_registeration.*
 
 @AndroidEntryPoint
 class InventoryFillFragment : Fragment() {
@@ -117,18 +112,18 @@ class InventoryFillFragment : Fragment() {
     private fun subscribeLiveData(){
         viewModel.registerState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                 }
 
-                SignInState.OperationSuccess::class ->{
+                AppDataState.OperationSuccess::class ->{
                     displayProgressbar(false)
                     Toast.makeText(requireContext(), "Successfully added stadium", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_inventoryFillFragment_to_stadiumsFragment)
                 }
 
-                SignInState.Error::class ->{
-                    val state = data as SignInState.Error
+                AppDataState.Error::class ->{
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }

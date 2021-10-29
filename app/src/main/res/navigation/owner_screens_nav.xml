@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/owner_screens_nav"
+    app:startDestination="@id/ownerHomeFragment">
+
+    <fragment
+        android:id="@+id/ownerHomeFragment"
+        android:name="com.training.ui.owner.OwnerHomeFragment"
+        android:label="fragment_owner_home"
+        tools:layout="@layout/fragment_owner_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.training.ui.common.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/ownerStadiumFragment"
+        android:name="com.training.ui.owner.OwnerStadiumFragment"
+        android:label="fragment_owner_stadium"
+        tools:layout="@layout/fragment_owner_stadium" />
+</navigation>

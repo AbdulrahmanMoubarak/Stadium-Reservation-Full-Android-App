@@ -10,13 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.training.R
 import com.training.model.StadiumModel
-import com.training.states.SignInState
-import com.training.util.constants.AccessPrivilege
+import com.training.states.AppDataState
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.DataRetrieveViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_stadium_view.*
-import kotlinx.android.synthetic.main.fragment_user_view.*
 
 @AndroidEntryPoint
 class StadiumViewFragment : Fragment() {
@@ -76,15 +74,15 @@ class StadiumViewFragment : Fragment() {
     private fun observeLiveData() {
         viewModel.user_retrieveState.observe(this, { data ->
             when (data::class) {
-                SignInState.Success::class -> {
-                    val state = data as SignInState.Success
+                AppDataState.Success::class -> {
+                    val state = data as AppDataState.Success
                     stadium_owner_name.text = state.data.first_name + " " + state.data.last_name
                     stadium_owner_phone.text = state.data.phone
                 }
 
-                SignInState.Error::class -> {
+                AppDataState.Error::class -> {
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     stadium_owner_name.text = ErrorFinder.getErrorMsg(state.type)
                     stadium_owner_phone.text = ""
                 }

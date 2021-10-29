@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/customerHomeFragment"
+        android:title="@string/home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/customerReservationFragment"
+        android:title="@string/reservations"
+        android:icon="@drawable/ic_note_svgrepo_com"/>
+
+    <item
+        android:id="@+id/profileFragment3"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_baseline_profile"/>
+</menu>

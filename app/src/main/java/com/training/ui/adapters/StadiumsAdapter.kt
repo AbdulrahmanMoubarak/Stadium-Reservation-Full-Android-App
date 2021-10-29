@@ -1,4 +1,4 @@
-package com.training.ui.recyclerviews;
+package com.training.ui.adapters;
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -31,8 +31,16 @@ class AppExceptionFactory(){
                 return KeyAlreadyExistsException()
             }
 
+            "GameAlreadyExistsException".lowercase()->{
+                return GameAlreadyExistsException()
+            }
+
             "NoDataException".lowercase()->{
                 return NoDataException()
+            }
+
+            "KeyDoesnotExistException".lowercase() ->{
+                return KeyDoesnotExistException()
             }
 
             else ->{

@@ -2,6 +2,7 @@ package com.training.util.constants
 
 class ErrorMsg {
     companion object{
+
         val ERROR_EMAIL_NOT_VALID_MSG = "Please enter a valid email!"
         val ERROR_PASSWORD_WRONG_MSG = "Wrong Password!"
         val ERROR_EMAIL_NOT_FOUND_MSG = "Email not found!"
@@ -16,7 +17,6 @@ class ErrorMsg {
         val PHONE_ALREADY_EXISTS_MSG = "email already exists!"
         val UNEXPECTED_ERROR_MSG = "Unexpected error!"
         val NETWORK_ERROR_MSG = "Netwok error!"
-        val DISCONNECTED_MSG = "You must have stable network connection!"
         val INVALID_USER_MSG = "Invalid user"
         val STADIUM_KEY_INVALID_MSG = "Stadium key cannot contain * - / + . ! # $"
         val STADIUM_KEY_EMPTY_MSG = "Enter Stadium Key"
@@ -24,5 +24,7 @@ class ErrorMsg {
         val STADIUM_LOC_EMPTY_MSG = "Enter Stadium Location"
         val KEY_ALREADY_EXISTS_MSG = "Stadium Key is already used, try another one"
         val NO_DATA_MSG = "No data to display"
+        val KEY_DOES_NOT_EXIST_MSG = "Key does not exist"
+        val GAME_ALREADY_EXIST_MSG = "Game already exists in this stadium"
     }
 }

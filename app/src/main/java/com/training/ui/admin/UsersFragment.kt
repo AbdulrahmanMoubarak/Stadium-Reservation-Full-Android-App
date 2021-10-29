@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.R
 import com.training.model.UserModel
-import com.training.ui.recyclerviews.OwnersAdapter
-import com.training.states.SignInState
-import com.training.util.constants.AccessPrivilege
+import com.training.ui.adapters.OwnersAdapter
+import com.training.states.AppDataState
 import com.training.util.constants.DataError.Companion.NETWORK_ERROR
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.DataRetrieveViewModel
@@ -76,23 +74,23 @@ class UsersFragment : Fragment() {
     private fun observeLiveData(){
         viewModel.retrieveState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                 }
 
-                SignInState.Success::class ->{
+                AppDataState.Success::class ->{
                     displayProgressbar(false)
-                    val state  = data as SignInState.Success
+                    val state  = data as AppDataState.Success
                     adapter.setItem_List(state.data)
                     owner_recyclerView.adapter = adapter
                     isLoaded = true
                     txt_err_userList.visibility = View.GONE
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     adapter.Item_List.clear()
                     owner_recyclerView.adapter = adapter
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }

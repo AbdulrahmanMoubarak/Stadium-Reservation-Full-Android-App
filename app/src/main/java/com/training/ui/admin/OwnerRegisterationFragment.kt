@@ -11,11 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
 import com.training.model.UserModel
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
@@ -68,21 +67,21 @@ class OwnerRegisterationFragment : Fragment() {
                 showErrorMsg(DataError.NETWORK_ERROR)
             }
         }
-        viewModel.registerState.postValue(SignInState.Filling)
+        viewModel.registerState.postValue(AppDataState.Filling)
     }
 
     private fun subscribeLiveData(){
         viewModel.registerState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.OperationSuccess::class ->{
+                AppDataState.OperationSuccess::class ->{
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
-                    val state  = data as SignInState.OperationSuccess
+                    val state  = data as AppDataState.OperationSuccess
                     /////
                     if (view != null) {
                         Snackbar.make(
@@ -96,9 +95,9 @@ class OwnerRegisterationFragment : Fragment() {
                     //////
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }

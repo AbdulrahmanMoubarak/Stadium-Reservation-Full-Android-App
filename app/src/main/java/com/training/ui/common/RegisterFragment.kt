@@ -1,5 +1,6 @@
 package com.training.ui.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -15,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
@@ -71,29 +72,29 @@ class RegisterFragment : Fragment() {
                 showErrorMsg(DataError.NETWORK_ERROR)
             }
         }
-        viewModel.registerState.postValue(SignInState.Filling)
+        viewModel.registerState.postValue(AppDataState.Filling)
     }
 
     private fun subscribeLiveData(){
         viewModel.registerState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.OperationSuccess::class ->{
+                AppDataState.OperationSuccess::class ->{
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
-                    val state  = data as SignInState.OperationSuccess
+                    val state  = data as AppDataState.OperationSuccess
                     saveUserData(myUser)
                     switchActivity(myUser)
                     requireActivity().finish()
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }
@@ -123,6 +124,7 @@ class RegisterFragment : Fragment() {
         progress_bar_register.visibility = if(isDisplayed) View.VISIBLE else View.GONE
     }
 
+    @SuppressLint("MissingPermission")
     private fun isConnected(): Boolean{
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -140,6 +142,8 @@ class RegisterFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
+            putString("stadium_key", user.stadium_key)
+            putBoolean("linked", user.linked)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }

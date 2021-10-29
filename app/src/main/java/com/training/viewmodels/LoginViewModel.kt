@@ -10,9 +10,8 @@ import com.training.exceptions.NetworkException
 import com.training.exceptions.UnknownErrorException
 import com.training.model.LoginModel
 import com.training.model.UserModel
-import com.training.repository.LoginRepository
 import com.training.repository.LoginRepositoryInterface
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.encryption.ItemHasherSHA256
 import com.training.util.validation.ErrorFinder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,14 +24,14 @@ class LoginViewModel
     private val repository: LoginRepositoryInterface
 ) : ViewModel() {
 
-    private val _loginState: MutableLiveData<SignInState<UserModel>> =
-        MutableLiveData<SignInState<UserModel>>()
+    private val _loginState: MutableLiveData<AppDataState<UserModel>> =
+        MutableLiveData<AppDataState<UserModel>>()
 
-    val loginState: MutableLiveData<SignInState<UserModel>>
+    val loginState: MutableLiveData<AppDataState<UserModel>>
         get() = _loginState
 
     fun validateLogin(user: LoginModel) {
-        _loginState.postValue(SignInState.Loading)
+        _loginState.postValue(AppDataState.Loading)
         viewModelScope.launch {
             validate_login_suspend(user)
         }
@@ -45,28 +44,28 @@ class LoginViewModel
             if (err > -1) {
                 val user = repository.getUserData(user.getFirebaseFormat())
                 if (user == null) {
-                    _loginState.postValue(SignInState.Error(UnknownErrorException().id))
+                    _loginState.postValue(AppDataState.Error(UnknownErrorException().id))
                     Log.d("here", "validateLogin: su")
                     return
                 } else {
-                    _loginState.postValue(SignInState.Success(user.getViewFormat()))
+                    _loginState.postValue(AppDataState.Success(user.getViewFormat()))
                     return
                 }
             } else {
-                _loginState.postValue(SignInState.Error(err))
+                _loginState.postValue(AppDataState.Error(err))
                 return
             }
         } catch (e: InvalidUserException) {
-            _loginState.postValue(SignInState.Error(e.id))
+            _loginState.postValue(AppDataState.Error(e.id))
             return
         } catch (e: NetworkException) {
-            _loginState.postValue(SignInState.Error(e.id))
+            _loginState.postValue(AppDataState.Error(e.id))
             return
         } catch (e: InvalidPasswordException) {
-            _loginState.postValue(SignInState.Error(e.id))
+            _loginState.postValue(AppDataState.Error(e.id))
             return
         } catch (e: UnknownErrorException) {
-            _loginState.postValue(SignInState.Error(e.id))
+            _loginState.postValue(AppDataState.Error(e.id))
             return
         }
     }
@@ -76,19 +75,19 @@ class LoginViewModel
         if(err > -1) {
             val hashed_pass = ItemHasherSHA256.hashItem(new_pass)
             val firebase_user = user.getFirebaseFormat()
-            _loginState.postValue(SignInState.Loading)
+            _loginState.postValue(AppDataState.Loading)
             viewModelScope.launch {
                 try {
                     repository.changePassword(firebase_user.email, hashed_pass, true)
-                    _loginState.postValue(SignInState.OperationSuccess)
+                    _loginState.postValue(AppDataState.OperationSuccess)
                     return@launch
                 } catch (e: UnknownErrorException) {
-                    _loginState.postValue(SignInState.Error(e.id))
+                    _loginState.postValue(AppDataState.Error(e.id))
                     return@launch
                 }
             }
         }else{
-            _loginState.postValue(SignInState.Error(err))
+            _loginState.postValue(AppDataState.Error(err))
         }
     }
 

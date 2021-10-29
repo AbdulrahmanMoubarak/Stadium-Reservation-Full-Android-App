@@ -17,7 +17,7 @@ import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.LoginModel
 import com.training.model.UserModel
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
@@ -59,21 +59,21 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
-        viewModel.loginState.postValue(SignInState.Filling)
+        viewModel.loginState.postValue(AppDataState.Filling)
     }
 
     private fun subscribeLiveData(){
         viewModel.loginState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.Success::class ->{
+                AppDataState.Success::class ->{
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
-                    val state  = data as SignInState.Success
+                    val state  = data as AppDataState.Success
                     saveLoginData(state.data)
                     if (state.data.first_usage == true && state.data.access_privilege != AccessPrivilege.CUSTOMER){
                         findNavController().navigate(R.id.action_loginFragment_to_changePasswordFragment)
@@ -83,9 +83,9 @@ class LoginFragment : Fragment() {
                     }
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }
@@ -125,6 +125,8 @@ class LoginFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
+            putString("stadium_key", user.stadium_key)
+            putBoolean("linked", user.linked)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }

@@ -15,18 +15,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.R
 import com.training.model.StadiumModel
-import com.training.model.UserModel
-import com.training.states.SignInState
-import com.training.ui.recyclerviews.OwnersAdapter
-import com.training.ui.recyclerviews.StadiumsAdapter
+import com.training.states.AppDataState
+import com.training.ui.adapters.StadiumsAdapter
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.DataRetrieveViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_stadiums.*
-import kotlinx.android.synthetic.main.fragment_users.*
-import kotlinx.android.synthetic.main.fragment_users.admin_home_button
-import java.util.*
 
 @AndroidEntryPoint
 class StadiumsFragment : Fragment() {
@@ -86,25 +81,25 @@ class StadiumsFragment : Fragment() {
 
 
     private fun observeLiveData(){
-        viewModel.stadium_retrieveState.observe(this, {data ->
+        viewModel.stadiums_retrieveState.observe(this, { data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                 }
 
-                SignInState.Success::class ->{
+                AppDataState.Success::class ->{
                     displayProgressbar(false)
-                    val state  = data as SignInState.Success
+                    val state  = data as AppDataState.Success
                     adapter.setItem_List(state.data)
                     stadiums_recyclerView.adapter = adapter
                     isLoaded = true
                     txt_err_stadiumList.visibility = View.GONE
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     adapter.Item_List.clear()
                     stadiums_recyclerView.adapter = adapter
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }

@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.R
 import com.training.model.StadiumModel
 import com.training.model.UserModel
-import com.training.states.SignInState
-import com.training.ui.recyclerviews.OwnerLinkAdapter
-import com.training.ui.recyclerviews.OwnersAdapter
+import com.training.states.AppDataState
+import com.training.ui.adapters.OwnerLinkAdapter
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.DataRetrieveViewModel
 import com.training.viewmodels.EditViewModel
@@ -91,22 +90,22 @@ class OwnerLinkFragment : Fragment() {
     private fun observeUserListLiveData() {
         viewModel.retrieveState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                 }
 
-                SignInState.Success::class ->{
+                AppDataState.Success::class ->{
                     displayProgressbar(false)
-                    val state  = data as SignInState.Success
+                    val state  = data as AppDataState.Success
                     adapter.setItem_List(state.data)
                     owner_link_recyclerView.adapter = adapter
                     txt_err_userList_link.visibility = View.GONE
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     adapter.Item_List.clear()
                     owner_link_recyclerView.adapter = adapter
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }
@@ -117,11 +116,11 @@ class OwnerLinkFragment : Fragment() {
     private fun ObserveEditLiveData(){
         editViewModel.updateState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                 }
 
-                SignInState.OperationSuccess::class ->{
+                AppDataState.OperationSuccess::class ->{
                     displayProgressbar(false)
                     Log.d("Here", "ObserveEditLiveData: operation success")
                     Toast.makeText(requireContext(), "Successfully linked", Toast.LENGTH_SHORT).show()
@@ -131,10 +130,10 @@ class OwnerLinkFragment : Fragment() {
                     findNavController().navigate(R.id.action_ownerLinkFragment_to_stadiumViewFragment, bundle)
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     adapter.Item_List.clear()
                     owner_recyclerView.adapter = adapter
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }

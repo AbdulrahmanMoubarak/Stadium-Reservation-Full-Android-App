@@ -109,6 +109,10 @@ class ErrorFinder {
                 return ErrorMsg.KEY_ALREADY_EXISTS_MSG
             } else if (err == DataError.NO_DATA) {
                 return ErrorMsg.NO_DATA_MSG
+            }else if (err == DataError.KEY_DOES_NOT_EXIST) {
+                return ErrorMsg.KEY_DOES_NOT_EXIST_MSG
+            }else if (err == DataError.GAME_ALREADY_EXIST) {
+                return ErrorMsg.GAME_ALREADY_EXIST_MSG
             } else {
                 return ErrorMsg.UNEXPECTED_ERROR_MSG
             }

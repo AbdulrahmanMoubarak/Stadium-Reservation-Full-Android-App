@@ -1,5 +1,6 @@
 package com.training.ui.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -14,7 +15,7 @@ import androidx.fragment.app.viewModels
 import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
-import com.training.states.SignInState
+import com.training.states.AppDataState
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.LoginViewModel
@@ -71,12 +72,12 @@ class ChangePasswordFragment : Fragment() {
     private fun subscribeLiveData(){
         viewModel.loginState.observe(this, {data ->
             when(data::class){
-                SignInState.Loading::class ->{
+                AppDataState.Loading::class ->{
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
 
-                SignInState.OperationSuccess::class ->{
+                AppDataState.OperationSuccess::class ->{
                     Log.d("Here", "subscribeLiveData: Success")
                     displayProgressbar(false)
                     user.first_usage = false
@@ -84,9 +85,9 @@ class ChangePasswordFragment : Fragment() {
                     switchActivity(user)
                 }
 
-                SignInState.Error::class ->{
+                AppDataState.Error::class ->{
                     Log.d("Here", "subscribeLiveData: Error")
-                    val state = data as SignInState.Error
+                    val state = data as AppDataState.Error
                     displayProgressbar(false)
                     showErrorMsg(state.type)
                 }
@@ -113,6 +114,7 @@ class ChangePasswordFragment : Fragment() {
             putExtra("user", user)
         }
         startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun saveLoginData(user: UserModel){
@@ -126,10 +128,13 @@ class ChangePasswordFragment : Fragment() {
             putString("lname", user.last_name)
             putString("password", user.password)
             putString("phone", user.phone)
+            putString("stadium_key", user.stadium_key)
+            putBoolean("linked", user.linked)
             putBoolean("first usage", user.first_usage)
         }.apply()
     }
 
+    @SuppressLint("MissingPermission")
     private fun isConnected(): Boolean{
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo

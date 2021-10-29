@@ -1,13 +1,16 @@
 package com.training.firebase
 
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.training.factory.AppExceptionFactory
-import com.training.model.LoginModel
-import com.training.model.StadiumModel
-import com.training.model.UserModel
+import com.training.model.*
 import com.training.util.constants.AccessPrivilege
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import javax.inject.Inject
 
 class FirebaseManager
@@ -80,7 +83,7 @@ constructor(
             "access_privilege" to user.access_privilege,
             "first_usage" to user.first_usage,
             "linked" to user.linked,
-            "stadium_key" to null
+            "stadium_key" to user.stadium_key
         )
 
         var snapshot = database.collection("users").document(user.email).get().await()
@@ -273,6 +276,183 @@ constructor(
             return user
         }else{
             throw AppExceptionFactory().getException("InvalidUserException")
+        }
+    }
+
+    suspend fun getStadiumByKey(key: String): StadiumModel{
+        var snapshot = database.collection("stadiums").document(key).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+        if(snapshot.exists()){
+            var stadium = snapshot.toObject(StadiumModel::class.java) as StadiumModel
+            return stadium
+        }else{
+            throw AppExceptionFactory().getException("KeyDoesnotExistException")
+        }
+    }
+
+    suspend fun addStadiumField(key: String, field: FieldModel){
+        var snapshot = database.collection("fields").whereEqualTo("game",field.game).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if(!snapshot.isEmpty) {
+            field.stadium_key = key
+            val temp_field = hashMapOf(
+                "game" to field.game,
+                "capacity" to field.capacity,
+                "available" to field.available,
+                "stadium_key" to field.stadium_key,
+                "price" to field.price
+            )
+            database.collection("fields").add(temp_field).addOnFailureListener {
+                throw AppExceptionFactory().getException("UnknownError")
+            }.await()
+        }else{
+            throw AppExceptionFactory().getException("GameAlreadyExistsException")
+        }
+    }
+
+    suspend fun getStadiumFields(key: String): List<FieldModel>{
+        var snapshot = database.collection("fields").whereEqualTo("stadium_key", key).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val fields = arrayListOf<FieldModel>()
+            for(field in snapshot){
+                fields.add(field.toObject(FieldModel::class.java))
+            }
+            return fields
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    suspend fun getReservationsByUser(user: UserModel): List<ReservationModel>{
+        var snapshot = database.collection("reservations").whereEqualTo("user_id", user.email).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                reservations.add(reservation.toObject(ReservationModel::class.java))
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    suspend fun getReservationsByUserAndStatus(user: UserModel, status:String): List<ReservationModel>{
+        var snapshot = database.collection("reservations")
+            .whereEqualTo("user_id", user.email)
+            .whereEqualTo("status", status)
+            .get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                reservations.add(reservation.toObject(ReservationModel::class.java))
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    suspend fun getReservationsByUserAndDate(user: UserModel, date: String): List<ReservationModel>{
+        var snapshot = database.collection("reservations").whereEqualTo("user_id", user.email).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                val temp = reservation.toObject(ReservationModel::class.java)
+                val milliseconds = temp.start_time.seconds * 1000 + temp.start_time.nanoseconds / 1000000
+                val date_temp = SimpleDateFormat("MM/dd/yyyy").format(Date(milliseconds)).toString()
+                if(date_temp.equals(date)){
+                    reservations.add(temp)
+                }
+            }
+            if(reservations.isEmpty()){
+                throw AppExceptionFactory().getException("NoDataException")
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    suspend fun getReservationByStadiumField(stadium_key: String, field_name: String): List<ReservationModel>{
+        var snapshot = database.collection("reservations")
+            .whereEqualTo("stadium_key", stadium_key)
+            .whereEqualTo("game", field_name)
+            .get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                reservations.add(reservation.toObject(ReservationModel::class.java))
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    suspend fun addReservation(reservation: ReservationModel){
+        val res_temp = hashMapOf(
+            "user_id" to reservation.user_id,
+            "status" to reservation.status,
+            "stadium_key" to reservation.stadium_key,
+            "price" to reservation.price,
+            "start_time" to reservation.start_time,
+            "end_time" to reservation.end_time,
+            "game" to reservation.game,
+            "location" to reservation.location
+        )
+
+        database.collection("reservations").add(res_temp).addOnFailureListener {
+            throw AppExceptionFactory().getException("UnknownError")
+        }.await()
+    }
+
+    suspend fun removeReservation(reservation: ReservationModel){
+        val snapshot = database.collection("reservations")
+            .whereEqualTo("user_id", reservation.user_id)
+            .whereEqualTo("stadium_key", reservation.stadium_key)
+            .whereEqualTo("game", reservation.game)
+            .whereEqualTo("start_time", reservation.start_time)
+            .get().await()
+
+        if(snapshot.size() == 1) {
+            for (doc in snapshot.documents) {
+                database.collection("reservations").document(doc.id).delete()
+            }
+        }else{
+            throw AppExceptionFactory().getException("UnknownError")
         }
     }
 }
