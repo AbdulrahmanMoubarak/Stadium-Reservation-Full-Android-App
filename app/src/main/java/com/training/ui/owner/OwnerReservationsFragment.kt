@@ -1,43 +1,35 @@
 package com.training.ui.owner
 
 import android.content.Context
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.R
 import com.training.application.MainApplication
 import com.training.model.ReservationModel
-import com.training.model.StadiumModel
 import com.training.model.UserModel
 import com.training.states.AppDataState
-import com.training.ui.adapters.ReservationAdapter
 import com.training.ui.adapters.ReservationAdapterOwner
 import com.training.util.constants.DataError
 import com.training.viewmodels.DataRetrieveViewModel
 import com.training.viewmodels.EditViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_customer_home.*
-import kotlinx.android.synthetic.main.fragment_customer_home.progress_bar_CustomerHome
 import kotlinx.android.synthetic.main.fragment_owner_home.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_owner_reservations.*
 
 @AndroidEntryPoint
-class OwnerHomeFragment : Fragment() {
+class OwnerReservationsFragment: Fragment()  {
+    private lateinit var user: UserModel
     private val viewModelGet: DataRetrieveViewModel by viewModels()
     private val viewModelEdit: EditViewModel by viewModels()
-    val recyclerAdapter = ReservationAdapterOwner(::setReservationStatus)
-    private lateinit var user: UserModel
-    val cal = Calendar.getInstance()
-    @RequiresApi(Build.VERSION_CODES.N)
-    val today = SimpleDateFormat("MM/dd/yyyy").format(Date(cal.timeInMillis)).toString()
+    private val recyclerAdapter =  ReservationAdapterOwner(::setReservationStatus)
+    private lateinit var selected: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,44 +37,65 @@ class OwnerHomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         user = getUserData()
-        return inflater.inflate(R.layout.fragment_owner_home, container, false)
+        return inflater.inflate(R.layout.fragment_owner_reservations, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        OwnerReservationTodayRecycler.apply {
+        
+        OwnerReservationRecycler.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             this.adapter = recyclerAdapter
         }
 
-        observeLiveData()
-
         if(user.linked) {
-            user.stadium_key?.let { viewModelGet.getStadiumDailyReservations(it, today) }
-        }else{
+
+            Ownerspinner_reservations.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapterView: AdapterView<*>?,
+                        p1: View?,
+                        i: Int,
+                        p3: Long
+                    ) {
+                        val selectedItemText = adapterView!!.getItemAtPosition(i) as String
+                        selected =
+                            when {
+                                selectedItemText.equals(getString(R.string.all)) -> "all"
+                                selectedItemText.equals(getString(R.string.accepted)) -> "accepted"
+                                selectedItemText.equals(getString(R.string.rejected)) -> "rejected"
+                                selectedItemText.equals(getString(R.string.pending)) -> "pending"
+                                else -> ""
+                            }
+                        user.stadium_key?.let { viewModelGet.getStadiumReservations(it, selected) }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+                }
+        } else{
             displayErrorView(true)
         }
 
+        observeLiveData()
     }
 
     private fun setReservationStatus(reservation: ReservationModel) {
         viewModelEdit.updateReservation(reservation)
     }
 
-    private fun displayProgressbar(isDisplayed: Boolean) {
-        progress_bar_OwnerHome.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-    }
-
     private fun displayErrorView(isVisible: Boolean) {
         if (isVisible) {
-            OwnerHasReservationToday.visibility = View.GONE
-            OwnerHasNoReservationToday.visibility = View.VISIBLE
+            OwnerHasReservation.visibility = View.GONE
+            OwnerHasNoReservation.visibility = View.VISIBLE
         } else {
-            OwnerHasNoReservationToday.visibility = View.GONE
-            OwnerHasReservationToday.visibility = View.VISIBLE
+            OwnerHasNoReservation.visibility = View.GONE
+            OwnerHasReservation.visibility = View.VISIBLE
         }
     }
+
 
     private fun getUserData(): UserModel {
         var sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
@@ -92,7 +105,7 @@ class OwnerHomeFragment : Fragment() {
             sp.getString("fname", "").toString(),
             sp.getString("lname", "").toString(),
             sp.getString("phone", "").toString(),
-            sp.getString("user type", "customer").toString(),
+            sp.getString("user type", "owner").toString(),
             sp.getBoolean("first usage", false),
             sp.getBoolean("linked", false),
             sp.getString("stadium_key", "").toString()
@@ -113,7 +126,7 @@ class OwnerHomeFragment : Fragment() {
                     displayErrorView(false)
                     val state = data as AppDataState.Success
                     recyclerAdapter.setItem_List(state.data)
-                    OwnerReservationTodayRecycler.adapter = recyclerAdapter
+                    OwnerReservationRecycler.adapter = recyclerAdapter
                 }
                 AppDataState.Error::class -> {
                     displayProgressbar(false)
@@ -138,7 +151,8 @@ class OwnerHomeFragment : Fragment() {
 
                 AppDataState.OperationSuccess::class -> {
                     displayProgressbar(false)
-                    OwnerReservationTodayRecycler.adapter = recyclerAdapter
+                    user.stadium_key?.let { viewModelGet.getStadiumReservations(it, selected) }
+                    OwnerReservationRecycler.adapter = recyclerAdapter
                     Toast.makeText(
                         requireContext(),
                         MainApplication.getApplication().getString(R.string.statusChanged),
@@ -158,5 +172,7 @@ class OwnerHomeFragment : Fragment() {
             }
         })
     }
-
+    private fun displayProgressbar(isDisplayed: Boolean) {
+        progress_bar_OwnerReservations.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+    }
 }

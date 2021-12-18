@@ -14,10 +14,20 @@
         android:id="@+id/profileFragment"
         android:name="com.training.ui.common.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_ownerHomeFragment"
+            app:destination="@id/ownerHomeFragment"
+            app:popUpTo="@id/ownerHomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/ownerStadiumFragment"
         android:name="com.training.ui.owner.OwnerStadiumFragment"
         android:label="fragment_owner_stadium"
         tools:layout="@layout/fragment_owner_stadium" />
+    <fragment
+        android:id="@+id/ownerReservationsFragment"
+        android:name="com.training.ui.owner.OwnerReservationsFragment"
+        android:label="OwnerReservationsFragment" />
 </navigation>

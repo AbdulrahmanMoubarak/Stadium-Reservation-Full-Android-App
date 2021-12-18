@@ -127,7 +127,7 @@ class StadiumMapFragment : Fragment(), OnMapReadyCallback {
             googleMap.addMarker(
                 MarkerOptions()
                     .position(LatLng(it.latitude, it.longitude))
-                    .title("Stadium Location")
+                    .title(getString(R.string.stadium_location))
             )
         }
     }

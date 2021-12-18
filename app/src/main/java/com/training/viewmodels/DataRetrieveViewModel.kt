@@ -208,6 +208,44 @@ constructor(var repository: GetDataRepositoryInterface): ViewModel() {
         }
     }
 
+    fun getStadiumReservations(stadium_key: String ,status: String){
+        _reservations_retrieveState.postValue(AppDataState.Loading)
+        viewModelScope.launch {
+            getStadiumReservations_suspend(stadium_key, status)
+        }
+    }
+
+    suspend fun getStadiumReservations_suspend(key: String, status: String){
+        try {
+            if(status.equals("all")) {
+                val res_list = repository.getStadiumReservations(key)
+                _reservations_retrieveState.postValue(AppDataState.Success(res_list))
+            }else{
+                val res_list = repository.getStadiumReservationsByStatus(key, status)
+                _reservations_retrieveState.postValue(AppDataState.Success(res_list))
+            }
+        }catch(e: NoDataException){
+            _reservations_retrieveState.postValue(AppDataState.Error(e.id))
+        }
+    }
+
+    fun getStadiumDailyReservations(stadium_key: String, date: String){
+        _reservations_retrieveState.postValue(AppDataState.Loading)
+        viewModelScope.launch {
+            getStadiumDailyReservations_suspend(stadium_key, date)
+        }
+    }
+
+    suspend fun getStadiumDailyReservations_suspend(key: String, date: String){
+        try {
+            val res_list = repository.getStadiumDailyReservations(key, date)
+            _reservations_retrieveState.postValue(AppDataState.Success(res_list))
+        }catch(e: NoDataException){
+            _reservations_retrieveState.postValue(AppDataState.Error(e.id))
+        }
+    }
+
+
     fun getStadiumFieldReservations(stadium_key: String, field_name: String){
         _reservations_retrieveState.postValue(AppDataState.Loading)
         viewModelScope.launch {

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
@@ -84,10 +85,10 @@ class OwnerRegisterationFragment : Fragment() {
                     val state  = data as AppDataState.OperationSuccess
                     /////
                     if (view != null) {
-                        Snackbar.make(
-                            view!!,
-                            "Successfully added owner",
-                            Snackbar.LENGTH_SHORT
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.successfulyAddedUser),
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
 

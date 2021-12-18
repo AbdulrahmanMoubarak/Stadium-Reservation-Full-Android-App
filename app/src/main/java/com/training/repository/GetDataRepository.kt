@@ -70,4 +70,23 @@ class GetDataRepository(var firebaseManager: FirebaseManager): GetDataRepository
     ): List<ReservationModel> {
         return firebaseManager.getReservationByStadiumField(stadium_key, field_name)
     }
+
+    override suspend fun getStadiumReservations(key: String): List<ReservationModel> {
+        return firebaseManager.getStadiumReservations(key)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override suspend fun getStadiumDailyReservations(
+        key: String,
+        date: String
+    ): List<ReservationModel> {
+        return firebaseManager.getStadiumDailyReservations(key, date)
+    }
+
+    override suspend fun getStadiumReservationsByStatus(
+        key: String,
+        status: String
+    ): List<ReservationModel> {
+        return firebaseManager.getReservationsByStadiumAndStatus(key, status)
+    }
 }

@@ -37,8 +37,6 @@ constructor(
         if (snapshot.exists()) {
             val firebase_user = snapshot.toObject(UserModel::class.java)
             if (user.password.equals(firebase_user?.password)) {
-                Log.d("password", "validateUserLogin: ${firebase_user?.password}")
-                Log.d("password", "validateUserLogin: ${user.password}")
                 if (firebase_user?.first_usage == true && firebase_user.access_privilege == AccessPrivilege.CUSTOMER) {
                     database.collection("users").document(user.email).update("first_usage", false)
                 }
@@ -453,6 +451,112 @@ constructor(
             }
         }else{
             throw AppExceptionFactory().getException("UnknownError")
+        }
+    }
+
+    suspend fun removeStadiumField(field: FieldModel){
+        val snapshot = database.collection("fields")
+            .whereEqualTo("stadium_key", field.stadium_key)
+            .whereEqualTo("game", field.game)
+            .get().await()
+
+        if(snapshot.size() == 1) {
+            for (doc in snapshot.documents) {
+                database.collection("fields").document(doc.id).delete()
+            }
+        }else{
+            throw AppExceptionFactory().getException("UnknownError")
+        }
+    }
+
+    suspend fun updateStadiumField(field: FieldModel){
+        val snapshot = database.collection("fields")
+            .whereEqualTo("stadium_key", field.stadium_key)
+            .whereEqualTo("game", field.game)
+            .get().await()
+
+        if(snapshot.size() == 1) {
+            for (doc in snapshot.documents) {
+                database.collection("fields").document(doc.id).set(field)
+            }
+        }else{
+            throw AppExceptionFactory().getException("UnknownError")
+        }
+    }
+
+    suspend fun updateReservation(reservation: ReservationModel) {
+        val snapshot = database.collection("reservations")
+            .whereEqualTo("user_id", reservation.user_id)
+            .whereEqualTo("stadium_key", reservation.stadium_key)
+            .whereEqualTo("game", reservation.game)
+            .whereEqualTo("start_time", reservation.start_time)
+            .get().await()
+
+        if(snapshot.size() == 1) {
+            for (doc in snapshot.documents) {
+                database.collection("reservations").document(doc.id).set(reservation)
+            }
+        }else{
+            throw AppExceptionFactory().getException("UnknownError")
+        }
+    }
+
+    suspend fun getStadiumReservations(key: String): List<ReservationModel> {
+        val snapshot = database.collection("reservations")
+            .whereEqualTo("stadium_key", key).get().await()
+
+        var reservations = arrayListOf<ReservationModel>()
+        for (reservation in snapshot) {
+            reservations.add(reservation.toObject(ReservationModel::class.java))
+        }
+        return reservations
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    suspend fun getStadiumDailyReservations(key: String, date: String): List<ReservationModel>{
+        var snapshot = database.collection("reservations").whereEqualTo("stadium_key", key).get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                val temp = reservation.toObject(ReservationModel::class.java)
+                val milliseconds = temp.start_time.seconds * 1000 + temp.start_time.nanoseconds / 1000000
+                val date_temp = SimpleDateFormat("MM/dd/yyyy").format(Date(milliseconds)).toString()
+                if(date_temp.equals(date)){
+                    reservations.add(temp)
+                }
+            }
+            if(reservations.isEmpty()){
+                throw AppExceptionFactory().getException("NoDataException")
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+    }
+
+    suspend fun getReservationsByStadiumAndStatus(key: String, status:String): List<ReservationModel>{
+        var snapshot = database.collection("reservations")
+            .whereEqualTo("stadium_key", key)
+            .whereEqualTo("status", status)
+            .get()
+            .addOnCanceledListener {
+                throw AppExceptionFactory().getException("NetworkException")
+            }
+            .await()
+
+        if (!snapshot.isEmpty) {
+            val reservations = arrayListOf<ReservationModel>()
+            for(reservation in snapshot){
+                reservations.add(reservation.toObject(ReservationModel::class.java))
+            }
+            return reservations
+        } else {
+            throw AppExceptionFactory().getException("NoDataException")
         }
     }
 }

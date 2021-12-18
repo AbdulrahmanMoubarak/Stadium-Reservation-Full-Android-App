@@ -138,7 +138,7 @@ class CustomerReservationFragment : Fragment() {
     }
 
     private fun observeLiveData(){
-        viewModelGet.reservations_retrieveState.observe(this, { data ->
+        viewModelGet.reservations_retrieveState.observe(this) { data ->
             when (data::class) {
                 AppDataState.Loading::class -> {
                     displayProgressbar(true)
@@ -165,7 +165,7 @@ class CustomerReservationFragment : Fragment() {
                         ).show()
                 }
             }
-        })
+        }
 
         viewModelGet.stadium_retrieveState.observe(this, { data ->
             when (data::class) {

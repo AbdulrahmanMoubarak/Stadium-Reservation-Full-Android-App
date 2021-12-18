@@ -47,7 +47,7 @@ class UserModel(
         access_privilege: String,
         first_usage: Boolean,
         linked: Boolean,
-        stadium_key: String
+        stadium_key: String = ""
     ): this(){
         this.email = email
         this.password = password

@@ -18,4 +18,7 @@ interface GetDataRepositoryInterface {
     suspend fun getUserReservationsByStatus(user: UserModel, status: String): List<ReservationModel>
     suspend fun getDayUserReservations(user: UserModel, date: String): List<ReservationModel>
     suspend fun getStadiumFieldReservations(stadium_key: String, field_name: String): List<ReservationModel>
+    suspend fun getStadiumReservations(key: String): List<ReservationModel>
+    suspend fun getStadiumDailyReservations(key: String, date: String): List<ReservationModel>
+    suspend fun getStadiumReservationsByStatus(key: String, status: String): List<ReservationModel>
 }

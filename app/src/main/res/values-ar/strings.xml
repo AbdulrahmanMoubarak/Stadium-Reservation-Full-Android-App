@@ -93,6 +93,43 @@
     <string name="tennis">تنس</string>
     <string name="swimming">سباحة</string>
     <string name="fieldNotAvailable">هذا الملعب غير متوفر حاليا</string>
+    <string name="removed_field">تمت ازالة الملعب بنجاح</string>
+    <string name="cannotDeleteField">لا يمكن ازالة ملعب محجوز</string>
+    <string name="remove">هل تريد ازالة هذا الملعب؟</string>
+    <string name="warning">تحذير</string>
+    <string name="statusChanged">تم تغيير الحالة بنجاح</string>
+    <string name="successfullyEdited">تم تعديل البيانات بنجاح</string>
+    <string name="search">ابحث هنا</string>
+    <string name="owner_name">اسم المالك</string>
+    <string name="successfulyAddedStadium">تمت اضافة الاستاد بنجاح</string>
+    <string name="successfullyLinked">تم الربط بنجاح</string>
+    <string name="successfulyAddedUser">تمت اضافة المالك بنجاح</string>
+    <string name="change_pass_header">مرحبا، </string>
+    <string name="email_not_valid">الرجاء ادخال بريد صحيح!</string>
+    <string name="password_wrong">كلمة المرور خاطئة!</string>
+    <string name="email_not_found">البريد الالكتروني غير موجود!</string>
+    <string name="fill_email">يجب ادخال البريد الالكتروني!</string>
+    <string name="enter_password">يجب ادخال كلمة المرور!</string>
+    <string name="empty_phone">يجب ادخال رقم الهاتف!</string>
+    <string name="empty_fname">يجب ادخال الاسم الأول!</string>
+    <string name="lname_empty">يجب ادخال الاسم الأخير!</string>
+    <string name="empty_uname">رجاء ادخال اسم المستخدم!</string>
+    <string name="invalid_phone">رقم الهاتف غير صحيح!</string>
+    <string name="email_exists">البريد الالكتروني موجود بالفعل!</string>
+    <string name="phone_exists">رقم الهاتف موجود بالفعل!</string>
+    <string name="network_error">خطأ في الاتصال!</string>
+    <string name="invalid_user">مستخدم خاطيء!</string>
+    <string name="enter_key">يجب ادخال رمز الاستاد</string>
+    <string name="enter_stad_name">يجب ادخال اسم الاستاد</string>
+    <string name="enter_stad_loc">يجب تحديد العنوان</string>
+    <string name="key_used">هذا الرمز مستخدم بالفعل، جرب رمز آخر</string>
+    <string name="no_data_msg">لأايوجد بيانات للعرض</string>
+    <string name="key_not_exist">هذا الرمز غير صحيح</string>
+    <string name="game_exists">هذا الملعب موجود بالفعل في الاستاد</string>
+    <string name="key_contains">رمز الاستاد لا يجب ان يحتوي على * - / + . ! # \$</string>
+    <string name="linked">المملوكين</string>
+    <string name="unlinked">غير المملوكين</string>
+    <string name="users">المستخدمين</string>
 
     <string-array name="stadium_filters">
         <item>الكل</item>
@@ -106,10 +143,17 @@
         <item>سباحة</item>
     </string-array>
 
-    <string-array name="reservation_filters">
+    <string-array name="reservation_filters1">
         <item>الكل</item>
         <item>المقبول</item>
         <item>المرفوض</item>
         <item>قيد الانتظار</item>
+    </string-array>
+
+    <string-array name="reservation_filters2">
+        <item>قيد الانتظار</item>
+        <item>الكل</item>
+        <item>المقبول</item>
+        <item>المرفوض</item>
     </string-array>
 </resources>

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.customer.CustomerReservationFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_CustomerReservations"
+        android:layout_width="112dp"
+        android:layout_height="101dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="180dp"/>
+
     <TextView
         android:id="@+id/textView8"
         style="@style/headerTextPrimary"
@@ -83,21 +95,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="new reservation" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar_CustomerReservations"
-        android:layout_width="112dp"
-        android:layout_height="101dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Spinner
         android:id="@+id/spinner_reservations"
         android:prompt="@string/all"
-        android:entries="@array/reservation_filters"
+        android:entries="@array/reservation_filters1"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"

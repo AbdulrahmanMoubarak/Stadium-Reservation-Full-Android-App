@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.training.R
+import com.training.application.MainApplication
 import com.training.model.InventoryModel
 import com.training.model.StadiumModel
 import com.training.states.AppDataState
@@ -118,7 +119,9 @@ class InventoryFillFragment : Fragment() {
 
                 AppDataState.OperationSuccess::class ->{
                     displayProgressbar(false)
-                    Toast.makeText(requireContext(), "Successfully added stadium", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.successfulyAddedStadium),
+                        Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_inventoryFillFragment_to_stadiumsFragment)
                 }
 

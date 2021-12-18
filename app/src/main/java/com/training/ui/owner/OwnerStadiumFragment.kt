@@ -1,5 +1,6 @@
 package com.training.ui.owner
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.R
+import com.training.application.MainApplication
 import com.training.model.FieldModel
 import com.training.model.StadiumModel
 import com.training.model.UserModel
@@ -18,8 +20,10 @@ import com.training.states.AppDataState
 import com.training.ui.adapters.FieldAdapter
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.DataRetrieveViewModel
+import com.training.viewmodels.EditViewModel
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_customer_reservation.*
 import kotlinx.android.synthetic.main.fragment_owner_stadium.*
 
 @AndroidEntryPoint
@@ -27,14 +31,16 @@ class OwnerStadiumFragment : Fragment() {
 
     private val viewModelGet: DataRetrieveViewModel by viewModels()
     private val viewModelRegister: RegisterViewModel by viewModels()
+    private val viewModelEdit: EditViewModel by viewModels()
     private lateinit var user: UserModel
     private lateinit var stadium: StadiumModel
-    lateinit var addFieldData: FieldModel
-    var adapter = FieldAdapter()
+    private lateinit var fieldData: FieldModel
+    private var isRemove = false
+    private var adapter = FieldAdapter(::removeField, ::updateFieldStatus, ::openAlertDialog)
 
     private fun onPressOk(field: FieldModel){
-        this.addFieldData = field
-        viewModelRegister.addStadiumField(stadium.id, addFieldData)
+        this.fieldData = field
+        viewModelRegister.addStadiumField(stadium.id, fieldData)
     }
 
 
@@ -59,13 +65,6 @@ class OwnerStadiumFragment : Fragment() {
             setAdapter(adapter)
         }
 
-        subscribeLiveData()
-        subscribeRegisterLiveData()
-
-        owner_fieldAdd.setOnClickListener {
-            openDialogue()
-        }
-
         if(user.linked){
             layout_hasStadium.visibility = View.VISIBLE
             user.stadium_key?.let{viewModelGet.getStadiumByKey(it)}
@@ -73,6 +72,18 @@ class OwnerStadiumFragment : Fragment() {
         }
         else{
             txt_hasNoStadium.visibility = View.VISIBLE
+        }
+
+        subscribeLiveData()
+        subscribeRegisterLiveData()
+
+        owner_fieldAdd.setOnClickListener {
+            openDialogue()
+        }
+
+        owner_stadium_active.setOnClickListener {
+            stadium.active = !stadium.active
+            viewModelEdit.updateStadiumData(stadium)
         }
     }
 
@@ -88,6 +99,7 @@ class OwnerStadiumFragment : Fragment() {
                     val state  = data as AppDataState.Success
                     stadium = state.data
                     displayStadiumData()
+
                 }
 
                 AppDataState.Error::class ->{
@@ -118,11 +130,85 @@ class OwnerStadiumFragment : Fragment() {
                 }
             }
         })
+
+        viewModelGet.reservations_retrieveState.observe(this, { data ->
+            when (data::class) {
+                AppDataState.Loading::class -> {
+                    displayProgressbar(true)
+                }
+
+                AppDataState.Success::class -> {
+                    displayProgressbar(false)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.cannotDeleteField),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                AppDataState.Error::class -> {
+                    displayProgressbar(false)
+                    if(isRemove) {
+                        viewModelEdit.removeStadiumField(fieldData)
+                        adapter.Item_List.remove(fieldData)
+                    }else{
+                        viewModelEdit.updateStadiumField(fieldData)
+                    }
+                }
+            }
+        })
+
+        viewModelEdit.updateState.observe(this, { data ->
+            when(data::class){
+                AppDataState.Loading::class ->{
+                    displayProgressbar(true)
+                }
+
+                AppDataState.OperationSuccess::class -> {
+                    displayProgressbar(false)
+                    if(isRemove) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.removed_field),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        isRemove = false
+                        owner_stadiumFieldsRecycler.adapter = adapter
+                    } else{
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.statusChanged),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        owner_stadiumFieldsRecycler.adapter = adapter
+                    }
+                }
+
+                AppDataState.Error::class ->{
+                    displayProgressbar(false)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.unexpectedError),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
+    }
+
+    private fun removeField(field: FieldModel){
+        fieldData = field
+        isRemove = true
+        viewModelGet.getStadiumFieldReservations(field.stadium_key, field.game)
+    }
+
+    private fun updateFieldStatus(field: FieldModel){
+        viewModelEdit.updateStadiumField(field)
     }
 
     private fun displayStadiumData() {
         owner_stadiumName.setText(stadium.name)
         owner_stadiumLocation.setText(stadium.location_str)
+        setAvailable()
     }
 
     private fun displayProgressbar(isDisplayed:Boolean){
@@ -156,7 +242,7 @@ class OwnerStadiumFragment : Fragment() {
                 AppDataState.OperationSuccess::class ->{
                     displayProgressbar(false)
                     Toast.makeText(requireContext(), "Successfully added game", Toast.LENGTH_SHORT).show()
-                    adapter.addItem(addFieldData)
+                    adapter.addItem(fieldData)
                     owner_stadiumFieldsRecycler.adapter = adapter
                     displayFields()
                 }
@@ -183,5 +269,17 @@ class OwnerStadiumFragment : Fragment() {
             txt_noFields.visibility = View.VISIBLE
             owner_StadiumFields.visibility = View.GONE
         }
+    }
+
+    private fun openAlertDialog():  AlertDialog.Builder{
+        val dialogBuilder = AlertDialog.Builder(requireContext()).apply {
+            setMessage(MainApplication.getApplication().getString(R.string.remove))
+            setTitle(MainApplication.getApplication().getString(R.string.warning))
+        }
+        return dialogBuilder
+    }
+
+    private fun setAvailable(){
+        owner_stadium_active.isChecked = stadium.active
     }
 }

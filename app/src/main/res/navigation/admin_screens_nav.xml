@@ -8,7 +8,11 @@
         android:id="@+id/profileFragment2"
         android:name="com.training.ui.common.ProfileFragment"
         android:label="profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment2_to_usersFragmentMain"
+            app:destination="@id/usersFragmentMain" />
+    </fragment>
     <fragment
         android:id="@+id/usersFragmentMain"
         android:name="com.training.ui.admin.UsersFragmentMain"

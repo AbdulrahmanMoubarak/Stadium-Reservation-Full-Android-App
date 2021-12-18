@@ -30,7 +30,7 @@ class OwnerActivity : AppCompatActivity(), ActivityInterface {
 
         var controller = findNavController(R.id.ownerNavHost)
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.ownerHomeFragment, R.id.ownerStadiumFragment, R.id.profileFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.ownerHomeFragment, R.id.ownerReservationsFragment, R.id.ownerStadiumFragment, R.id.profileFragment))
 
         setupActionBarWithNavController(controller, appBarConfiguration)
 

@@ -123,7 +123,9 @@ class OwnerLinkFragment : Fragment() {
                 AppDataState.OperationSuccess::class ->{
                     displayProgressbar(false)
                     Log.d("Here", "ObserveEditLiveData: operation success")
-                    Toast.makeText(requireContext(), "Successfully linked", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.successfullyLinked),
+                        Toast.LENGTH_SHORT).show()
                     val bundle = Bundle().apply {
                         putSerializable("stadium", stadium)
                     }

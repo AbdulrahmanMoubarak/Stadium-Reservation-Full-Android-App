@@ -17,12 +17,15 @@ import com.training.R
 import com.training.factory.UserActivityFactory
 import com.training.model.UserModel
 import com.training.states.AppDataState
+import com.training.ui.ActivityInterface
 import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import java.util.*
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -41,6 +44,17 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeLiveData()
+
+        switchLanguageRegister.setOnClickListener {
+            val lang =
+                (requireActivity() as ActivityInterface).getCurrentLocale().language.toString()
+            if (lang.equals(Locale.ENGLISH.language)) {
+                (requireActivity() as ActivityInterface).setLanguage("ar")
+            } else {
+                (requireActivity() as ActivityInterface).setLanguage(Locale.ENGLISH)
+            }
+            //findNavController().navigate(R.id.action_registerFragment_self)
+        }
     }
 
     override fun onStart() {

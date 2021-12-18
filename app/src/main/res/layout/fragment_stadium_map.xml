@@ -42,7 +42,7 @@
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="@+id/stadium_map"
             app:layout_constraintTop_toTopOf="@+id/map"
-            app:queryHint="Search Here" />
+            app:queryHint="@string/search" />
 
         <TextView
             android:id="@+id/textView"

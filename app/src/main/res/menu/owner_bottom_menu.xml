@@ -3,16 +3,21 @@
 
     <item
         android:id="@+id/ownerHomeFragment"
-        android:title="home"
+        android:title="@string/home"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
+        android:id="@+id/ownerReservationsFragment"
+        android:title="@string/reservations"
+        android:icon="@drawable/ic_note_svgrepo_com"/>
+
+    <item
         android:id="@+id/ownerStadiumFragment"
-        android:title="stadium"
+        android:title="@string/stadium"
         android:icon="@drawable/ic_stadium_logo"/>
 
     <item
         android:id="@+id/profileFragment"
-        android:title="profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_baseline_profile"/>
 </menu>

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,9 +18,11 @@ import com.akexorcist.localizationactivity.core.LocalizationActivityDelegate
 import com.akexorcist.localizationactivity.core.OnLocaleChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.training.R
+import com.training.application.MainApplication
 import com.training.model.UserModel
 import com.training.states.AppDataState
 import com.training.ui.ActivityInterface
+import com.training.util.constants.AccessPrivilege
 import com.training.util.constants.DataError
 import com.training.util.validation.ErrorFinder
 import com.training.viewmodels.EditViewModel
@@ -44,7 +47,6 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        subscribeLiveData()
         super.onViewCreated(view, savedInstanceState)
         user = getLoginData()
         setupView()
@@ -65,6 +67,8 @@ class ProfileFragment : Fragment() {
             profile_viewmode.visibility = View.VISIBLE
         }
 
+        subscribeLiveData()
+
         profile_confirm_edit.setOnClickListener {
             if (isConnected()) {
                 val edit_user = getEditData()
@@ -75,23 +79,30 @@ class ProfileFragment : Fragment() {
                     passEdited = true
                     viewmodel.updateUserData(edit_user, true)
                 }
-            }
-            else
+            } else
                 showErrorMsg(DataError.NETWORK_ERROR)
         }
+
         switchLanguage.setOnClickListener {
-            val lang = (requireActivity() as ActivityInterface).getCurrentLocale().language.toString()
-            if(lang.equals(Locale.ENGLISH.language)){
+            val lang =
+                (requireActivity() as ActivityInterface).getCurrentLocale().language.toString()
+            if (lang.equals(Locale.ENGLISH.language)) {
                 (requireActivity() as ActivityInterface).setLanguage("ar")
             } else {
                 (requireActivity() as ActivityInterface).setLanguage(Locale.ENGLISH)
             }
-            findNavController().navigate(R.id.action_profileFragment3_to_customerHomeFragment)
+            if (user.access_privilege.equals(AccessPrivilege.OWNER)) {
+                findNavController().navigate(R.id.action_profileFragment_to_ownerHomeFragment)
+            } else if (user.access_privilege.equals(AccessPrivilege.CUSTOMER)) {
+                findNavController().navigate(R.id.action_profileFragment3_to_customerHomeFragment)
+            } else if (user.access_privilege.equals(AccessPrivilege.ADMIN)) {
+                findNavController().navigate(R.id.action_profileFragment2_to_usersFragmentMain)
+            }
         }
     }
 
 
-    private fun setupView(){
+    private fun setupView() {
         profile_fname.setText(user.first_name)
         profile_fname_edit.setText(user.first_name)
         profile_lname.setText(user.last_name)
@@ -111,13 +122,15 @@ class ProfileFragment : Fragment() {
             sp.getString("fname", "").toString(),
             sp.getString("lname", "").toString(),
             sp.getString("phone", "").toString(),
-            sp.getString("user type", "customer").toString(),
-            sp.getBoolean("first usage", false)
+            sp.getString("user type", "owner").toString(),
+            sp.getBoolean("first usage", false),
+            sp.getBoolean("linked", false),
+            sp.getString("stadium_key", "").toString()
         )
         return user
     }
 
-    private fun getEditData():UserModel{
+    private fun getEditData(): UserModel {
         return UserModel(
             profile_email_edit.text.toString(),
             profile_password_edit.text.toString(),
@@ -125,14 +138,16 @@ class ProfileFragment : Fragment() {
             profile_lname_edit.text.toString(),
             profile_mobile_edit.text.toString(),
             user.access_privilege,
-            user.first_usage
+            user.first_usage,
+            user.linked,
+            user.stadium_key.toString()
         )
     }
 
-    private fun subscribeLiveData(){
-        viewmodel.updateState.observe(this, {data ->
-            when(data::class){
-                AppDataState.Loading::class ->{
+    private fun subscribeLiveData() {
+        viewmodel.updateState.observe(this, { data ->
+            when (data::class) {
+                AppDataState.Loading::class -> {
                     displayProgressbar(true)
                     Log.d("Here", "subscribeLiveData: loading")
                 }
@@ -146,14 +161,14 @@ class ProfileFragment : Fragment() {
                     setupView()
                     profile_editmode.visibility = View.GONE
                     profile_viewmode.visibility = View.VISIBLE
-                    Snackbar.make(
-                        view!!,
-                        "Successfully updated data",
-                        Snackbar.LENGTH_SHORT
+                    Toast.makeText(
+                        requireContext(),
+                        MainApplication.getApplication().getString(R.string.successfullyEdited),
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
 
-                AppDataState.Error::class ->{
+                AppDataState.Error::class -> {
                     Log.d("Here", "subscribeLiveData: Error")
                     val state = data as AppDataState.Error
                     displayProgressbar(false)
@@ -163,17 +178,17 @@ class ProfileFragment : Fragment() {
         })
     }
 
-    private fun displayProgressbar(isDisplayed:Boolean){
-        progress_bar_edit.visibility = if(isDisplayed) View.VISIBLE else View.GONE
+    private fun displayProgressbar(isDisplayed: Boolean) {
+        progress_bar_edit.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
 
-    private fun showErrorMsg(error: Int){
+    private fun showErrorMsg(error: Int) {
         val error_msg = ErrorFinder.getErrorMsg(error)
         edit_txt_error_msg.text = error_msg
         edit_txt_error_msg.visibility = View.VISIBLE
     }
 
-    private fun updateSharedPreference(user: UserModel, logged: Boolean){
+    private fun updateSharedPreference(user: UserModel, logged: Boolean) {
         val sp = requireActivity().getSharedPreferences("onLogged", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.apply {
@@ -191,18 +206,17 @@ class ProfileFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun isConnected(): Boolean{
+    private fun isConnected(): Boolean {
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         return activeNetwork?.isConnectedOrConnecting == true
     }
 
-    private fun navigateToMainActivity(){
+    private fun navigateToMainActivity() {
         Intent(requireActivity(), MainActivity::class.java).apply {
             startActivity(this)
         }
     }
-
 
 
 }

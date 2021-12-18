@@ -2,6 +2,7 @@ package com.training.di
 
 import com.training.firebase.FirebaseManager
 import com.training.repository.EditRepository
+import com.training.repository.EditRepositoryInterface
 import com.training.repository.RegisterRepository
 import com.training.repository.RegisterRepositoryInterface
 import dagger.Module
@@ -18,7 +19,7 @@ object EditRepositoryModule {
     @Provides
     fun provideEditRepository(
         firebaseManager: FirebaseManager,
-    ): EditRepository {
+    ): EditRepositoryInterface {
         return EditRepository(firebaseManager)
     }
 }

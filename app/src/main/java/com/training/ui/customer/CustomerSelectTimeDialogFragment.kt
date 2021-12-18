@@ -69,7 +69,8 @@ class CustomerSelectTimeDialogFragment(
                     requireActivity(),
                     { timePicker, hour, min ->
                         setFromTime(Pair(hour, min))
-                        view.editTextTimeFrom.setText("${hour}:${min}")
+                        var minStr = if(min < 10) "0${min}" else min.toString()
+                        view.editTextTimeFrom.setText("${hour}:${minStr}")
                     },
                     0,
                     0,
@@ -87,7 +88,8 @@ class CustomerSelectTimeDialogFragment(
                     requireActivity(),
                     { timePicker, hour, min ->
                         setToTime(Pair(hour, min))
-                        view.editTextTimeTo.setText("${hour}:${min}")
+                        var minStr = if(min < 10) "0${min}" else min.toString()
+                        view.editTextTimeTo.setText("${hour}:${minStr}")
                     },
                     0,
                     0,

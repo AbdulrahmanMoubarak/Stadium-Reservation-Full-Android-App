@@ -113,4 +113,31 @@ class FakeGetDataRepository(): GetDataRepositoryInterface{
         return emptyList()
     }
 
+    override suspend fun getStadiumReservations(key: String): List<ReservationModel> {
+        if(isListEmpty){
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+        return emptyList()
+    }
+
+    override suspend fun getStadiumDailyReservations(
+        key: String,
+        date: String
+    ): List<ReservationModel> {
+        if(isListEmpty){
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+        return emptyList()
+    }
+
+    override suspend fun getStadiumReservationsByStatus(
+        key: String,
+        status: String
+    ): List<ReservationModel> {
+        if(isListEmpty){
+            throw AppExceptionFactory().getException("NoDataException")
+        }
+        return emptyList()
+    }
+
 }

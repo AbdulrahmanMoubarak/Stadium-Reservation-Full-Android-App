@@ -59,7 +59,15 @@ class StadiumsFragment : Fragment() {
         spinner1.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(adapterView: AdapterView<*>?, p1: View?, i: Int, p3: Long) {
                 val selectedItemText = adapterView!!.getItemAtPosition(i) as String
-                viewModel.getStadiumsList(selectedItemText)
+
+                val selected =
+                    when {
+                        selectedItemText.equals(getString(R.string.all)) -> "all"
+                        selectedItemText.equals(getString(R.string.linked)) -> "linked"
+                        selectedItemText.equals(getString(R.string.unlinked)) -> "unlinked"
+                        else -> ""
+                    }
+                viewModel.getStadiumsList(selected)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

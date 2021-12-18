@@ -20,6 +20,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
 
+            <ImageButton
+                android:id="@+id/stadium_field_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/redError"
+                android:src="@drawable/ic_baseline_remove_circle_24"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewField"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="8dp"/>
+
             <ImageView
                 android:id="@+id/imageViewField"
                 android:layout_width="81dp"
@@ -33,6 +44,7 @@
                 app:layout_constraintVertical_bias="0.175" />
 
             <ImageView
+
                 android:id="@+id/imageViewAvailable"
                 android:layout_width="28dp"
                 android:layout_height="38dp"

@@ -93,6 +93,43 @@
     <string name="tennis">tennis</string>
     <string name="swimming">swimming</string>
     <string name="fieldNotAvailable">This field is not available at the moment</string>
+    <string name="removed_field">Successfully removed field</string>
+    <string name="cannotDeleteField">Can not delete a field that is reserved</string>
+    <string name="remove">Do you want to permanently delete this field</string>
+    <string name="warning">warning</string>
+    <string name="statusChanged">Successfully changed status</string>
+    <string name="successfullyEdited">Successfully updated data</string>
+    <string name="search">Search Here</string>
+    <string name="owner_name">Owner name</string>
+    <string name="successfulyAddedStadium">Successfully added stadium</string>
+    <string name="successfullyLinked">Successfully linked</string>
+    <string name="successfulyAddedUser">Successfully added owner</string>
+    <string name="change_pass_header">Hi,</string>
+    <string name="email_not_valid">Please enter a valid email!</string>
+    <string name="password_wrong">Wrong Password!</string>
+    <string name="email_not_found">Email not found!</string>
+    <string name="fill_email">You have to fill the email!</string>
+    <string name="enter_password">You have to enter password!</string>
+    <string name="empty_phone">Phone can not be empty!</string>
+    <string name="empty_fname">Enter your first name!</string>
+    <string name="lname_empty">Enter your last name!</string>
+    <string name="empty_uname">Enter a username!</string>
+    <string name="invalid_phone">Invalid phone number!</string>
+    <string name="email_exists">email already exists!</string>
+    <string name="phone_exists">phone already exists!</string>
+    <string name="network_error">Netwok error!</string>
+    <string name="invalid_user">Invalid user</string>
+    <string name="enter_key">Enter Stadium Key</string>
+    <string name="enter_stad_name">Enter Stadium Name</string>
+    <string name="enter_stad_loc">Enter Stadium Location</string>
+    <string name="key_used">Stadium Key is already used, try another one</string>
+    <string name="no_data_msg">No data to display</string>
+    <string name="key_not_exist">Key does not exist</string>
+    <string name="game_exists">Game already exists in this stadium</string>
+    <string name="key_contains">Stadium key cannot contain * - / + . ! # \$</string>
+    <string name="linked">Linked</string>
+    <string name="unlinked">Unlinked</string>
+    <string name="users">users</string>
 
     <string-array name="stadium_filters">
         <item>All</item>
@@ -106,10 +143,17 @@
         <item>swimming</item>
     </string-array>
 
-    <string-array name="reservation_filters">
+    <string-array name="reservation_filters1">
         <item>all</item>
         <item>accepted</item>
         <item>rejected</item>
         <item>pending</item>
+    </string-array>
+
+    <string-array name="reservation_filters2">
+        <item>pending</item>
+        <item>all</item>
+        <item>accepted</item>
+        <item>rejected</item>
     </string-array>
 </resources>

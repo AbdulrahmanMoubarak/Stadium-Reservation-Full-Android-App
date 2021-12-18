@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.admin.OwnerLinkFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_userList_link"
+        android:layout_width="112dp"
+        android:layout_height="101dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:translationZ="180dp"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -40,15 +51,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
-    <ProgressBar
-        android:id="@+id/progress_bar_userList_link"
-        android:layout_width="112dp"
-        android:layout_height="101dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
